@@ -14,11 +14,7 @@ import {
   ArrowLeft, // Icon for Conversation Card title
 } from 'lucide-react'; 
 
-import { ButtonV1 } from '@/components/Button/v1';
 import { ButtonV2 } from '@/components/Button/v2';
-import { ButtonV3 } from '@/components/Button/v3';
-import { ButtonV4 } from '@/components/Button/v4'; // Import ButtonV4
-// Row imports removed
 import { CardV1 } from '@/components/Card/v1';
 import {
   SidebarProvider,
@@ -65,7 +61,6 @@ const ContentBlock = ({ label, className }: { label: string, className?: string 
 const components = [
   { id: 'button-section', name: 'Button', icon: LayoutGrid },
   { id: 'card-section', name: 'Card', icon: CreditCard },
-  // { id: 'row-section', name: 'Row (Layout)', icon: Columns }, // Removed Row (Layout)
   { id: 'detail-row-section', name: 'Detail Row', icon: ListTree }, // Rename Account Detail Row -> Detail Row
   { id: 'card-action-footer-section', name: 'Card Action Footer', icon: FlipHorizontal }, // Add Card Action Footer
   { id: 'card-row-layouts-section', name: 'Card Row Layouts', icon: Rows }, // Add Card Row Layouts
@@ -142,53 +137,70 @@ export default function TestingPage() {
 
   const [activeSection, setActiveSection] = React.useState(components[0].id);
 
-  // --- Button Data Arrays ---
-  const buttonV1Data = [
-    { variant: 'default', label: 'Primary Action' },
-    { variant: 'secondary', label: 'Secondary Action' },
-  ] as const;
+  // --- Standard Button Data (using ButtonV2) ---\
+  const standardButtonData = {
+    primary: {
+      variant: 'default' as const,
+      sizes: [
+        { size: 'sm', label: 'Primary Sm' },
+        { size: 'default', label: 'Primary Def' },
+        { size: 'lg', label: 'Primary Lg' },
+      ] as const,
+      icons: [
+        { label: 'Icon Lead', icon: <PlaceholderIcon />, iconPosition: 'leading' },
+        { label: 'Icon Trail', icon: <PlaceholderIcon />, iconPosition: 'trailing' },
+      ] as const,
+    },
+    secondary: {
+      variant: 'outline' as const,
+      sizes: [
+        { size: 'sm', label: 'Secondary Sm' },
+        { size: 'default', label: 'Secondary Def' },
+        { size: 'lg', label: 'Secondary Lg' },
+      ] as const,
+      icons: [
+        { label: 'Icon Lead', icon: <PlaceholderIcon />, iconPosition: 'leading' },
+        { label: 'Icon Trail', icon: <PlaceholderIcon />, iconPosition: 'trailing' },
+      ] as const,
+    },
+    tertiary: {
+      variant: 'ghost' as const,
+      sizes: [
+        { size: 'sm', label: 'Tertiary Sm' },
+        { size: 'default', label: 'Tertiary Def' },
+        { size: 'lg', label: 'Tertiary Lg' },
+      ] as const,
+      icons: [
+        { label: 'Icon Lead', icon: <PlaceholderIcon />, iconPosition: 'leading' },
+        { label: 'Icon Trail', icon: <PlaceholderIcon />, iconPosition: 'trailing' },
+      ] as const,
+    },
+  };
 
-  const buttonV2Data = [
-    { variant: 'outline', label: 'Outline Button' },
-    { variant: 'ghost', label: 'Ghost Button' },
-    { variant: 'outline', label: 'Leading Icon', icon: <PlaceholderIcon />, iconPosition: 'leading' },
-    { variant: 'ghost', label: 'Trailing Icon', icon: <PlaceholderIcon />, iconPosition: 'trailing' },
-  ] as const;
-
-  const buttonV3SizeData = [
-    { size: 'sm', label: 'Small' },
-    { size: 'default', label: 'Default' },
-    { size: 'lg', label: 'Large' },
-  ] as const;
-
-  const buttonV3LoadingData = [
-    { size: 'default' as const, label: isLoading ? 'Processing...' : 'Click to Load', loading: isLoading, onClick: handleV3Click },
-    { size: 'default' as const, label: 'Always Loading', loading: true },
-  ];
-
-  const buttonV4BaseProps = { variant: 'conversational' as const };
-  const buttonV4SolidData = [
+  // --- Conversational Button Data (using ButtonV2) ---
+  const conversationalButtonBaseProps = { variant: 'conversational' as const };
+  const conversationalButtonSolidData = [
     { fill: 'solid', size: 'sm', label: 'Solid Small' },
     { fill: 'solid', size: 'default', label: 'Solid Default' },
     { fill: 'solid', size: 'lg', label: 'Solid Large' },
     { fill: 'solid', label: 'Solid Icon', icon: <PlaceholderIcon /> },
     { fill: 'solid', label: 'Trailing Icon', icon: <PlaceholderIcon />, iconPosition: 'trailing' },
   ] as const;
-  const buttonV4OutlineData = [
+  const conversationalButtonOutlineData = [
     { fill: 'outline', size: 'sm', label: 'Outline Small' },
     { fill: 'outline', size: 'default', label: 'Outline Default' },
     { fill: 'outline', size: 'lg', label: 'Outline Large' },
     { fill: 'outline', label: 'Outline Icon', icon: <PlaceholderIcon /> },
     { fill: 'outline', label: 'Trailing Icon', icon: <PlaceholderIcon />, iconPosition: 'trailing' },
   ] as const;
-  const buttonV4GhostData = [
+  const conversationalButtonGhostData = [
     { fill: 'ghost', size: 'sm', label: 'Ghost Small' },
     { fill: 'ghost', size: 'default', label: 'Ghost Default' },
     { fill: 'ghost', size: 'lg', label: 'Ghost Large' },
     { fill: 'ghost', label: 'Ghost Icon', icon: <PlaceholderIcon /> },
     { fill: 'ghost', label: 'Trailing Icon', icon: <PlaceholderIcon />, iconPosition: 'trailing' },
   ] as const;
-  const buttonV4LoadingData = [
+  const conversationalButtonLoadingData = [
     { fill: 'solid', label: 'Loading Solid', loading: true },
     { fill: 'outline', label: 'Loading Outline', loading: true },
     { fill: 'ghost', label: 'Loading Ghost', loading: true },
@@ -197,18 +209,18 @@ export default function TestingPage() {
   // --- Card Action Footer Data Array ---
   const cardActionFooterExamples = [
     {
-      id: 'primary-only',
-      title: 'Confirm Action',
-      content: <p className="text-sm text-muted-foreground">Are you sure you want to proceed?</p>,
-      primaryAction: <ButtonV3 size="default">Confirm</ButtonV3>,
-      secondaryAction: null,
-    },
-    {
       id: 'primary-secondary',
       title: 'Save Changes?',
       content: <p className="text-sm text-muted-foreground">You have unsaved changes.</p>,
-      primaryAction: <ButtonV3 size="default">Save</ButtonV3>,
+      primaryAction: <ButtonV2 variant="default" size="default">Save</ButtonV2>,
       secondaryAction: <ButtonV2 variant="outline">Cancel</ButtonV2>,
+    },
+    {
+      id: 'primary-only',
+      title: 'Confirm Action',
+      content: <p className="text-sm text-muted-foreground">Are you sure you want to proceed?</p>,
+      primaryAction: <ButtonV2 variant="default" size="default">Confirm</ButtonV2>,
+      secondaryAction: null,
     },
     {
       id: 'secondary-only',
@@ -221,14 +233,14 @@ export default function TestingPage() {
       id: 'convo-ps',
       title: 'Engage?',
       content: <p className="text-sm text-muted-foreground">Start a conversation?</p>,
-      primaryAction: <ButtonV4 variant="conversational" fill="solid" size="default">Start Now</ButtonV4>,
-      secondaryAction: <ButtonV4 variant="conversational" fill="outline" size="default">Maybe Later</ButtonV4>,
+      primaryAction: <ButtonV2 variant="conversational" fill="solid" size="default">Start Now</ButtonV2>,
+      secondaryAction: <ButtonV2 variant="conversational" fill="outline" size="default">Maybe Later</ButtonV2>,
     },
     {
       id: 'convo-p-only',
       title: 'Submit Feedback',
       content: <p className="text-sm text-muted-foreground">Send your thoughts.</p>,
-      primaryAction: <ButtonV4 variant="conversational" fill="solid" size="default">Send</ButtonV4>,
+      primaryAction: <ButtonV2 variant="conversational" fill="solid" size="default">Send</ButtonV2>,
       secondaryAction: null,
     },
     {
@@ -236,7 +248,150 @@ export default function TestingPage() {
       title: 'Reminder Set',
       content: <p className="text-sm text-muted-foreground">We'll notify you later.</p>,
       primaryAction: null,
-      secondaryAction: <ButtonV4 variant="conversational" fill="ghost" size="default">Dismiss</ButtonV4>,
+      secondaryAction: <ButtonV2 variant="conversational" fill="ghost" size="default">Dismiss</ButtonV2>,
+    },
+  ];
+
+  // --- Simple Card Row Layout Data ---
+  const simpleCardLayoutExamples = [
+    {
+      id: '4-cards',
+      title: '4 Cards per Row (flex-wrap)',
+      cards: [
+        { id: 'c1', title: 'Card 1', content: 'Content for card 1.', minWidth: '250px' },
+        { id: 'c2', title: 'Card 2', content: 'Content for card 2.', minWidth: '250px' },
+        { id: 'c3', title: 'Card 3', content: 'Content for card 3.', minWidth: '250px' },
+        { id: 'c4', title: 'Card 4', content: 'Content for card 4.', minWidth: '250px' },
+      ],
+    },
+    {
+      id: '3-cards',
+      title: '3 Cards per Row (flex-wrap)',
+      cards: [
+        { id: 'cX', title: 'Card X', content: 'Content for card X.', minWidth: '250px' },
+        { id: 'cY', title: 'Card Y', content: 'Content for card Y.', minWidth: '250px' },
+        { id: 'cZ', title: 'Card Z', content: 'Content for card Z.', minWidth: '250px' },
+      ],
+    },
+    {
+      id: '2-cards',
+      title: '2 Cards per Row (flex-wrap)',
+      cards: [
+        { id: 'cA', title: 'Card A', content: 'Content for card A.', minWidth: '300px' },
+        { id: 'cB', title: 'Card B', content: 'Content for card B.', minWidth: '300px' },
+      ],
+    },
+    {
+      id: '1-card',
+      title: '1 Card per Row (flex-wrap)',
+      cards: [
+        { id: 's1', title: 'Single Card', content: 'This card takes up available space but will wrap if screen is narrow.', minWidth: '200px' },
+      ],
+    },
+  ];
+
+  // --- Reusable Card Components for Row Layouts ---
+  const MultipleAccountsCardContent = () => (
+    <div className="p-0"> {/* Ensure no padding from parent if contentProps specify it */} 
+      <DetailRowV1 primaryText="Primary Checking" secondaryText="**** 1234" actionContent={<span className="text-sm font-medium text-green-700">$10,543.21</span>} className="px-6 py-3" />
+      <DetailRowV1 primaryText="Savings Account" secondaryText="**** 5678" actionContent={<span className="text-sm font-medium text-foreground">$25,801.50</span>} className="border-t border-border px-6 py-3"/>
+      <DetailRowV1 primaryText="Credit Card" secondaryText="**** 9900 - Due Aug 15" actionContent={<span className="text-sm font-medium text-red-600">-$1,234.56</span>} className="border-t border-border px-6 py-3"/>
+      <DetailRowV1 primaryText="Investment Portfolio" secondaryText="**** 4321" actionContent={<span className="text-sm font-medium text-blue-600">$115,300.75</span>} className="border-t border-border px-6 py-3"/>
+    </div>
+  );
+
+  const MultipleAccountsFooter1 = () => (
+    <CardActionFooterV1 secondaryAction={<ButtonV2 variant="outline">Manage Accounts</ButtonV2>} primaryAction={<ButtonV2 variant="default" size="default">Transfer Funds</ButtonV2>}/>
+  );
+
+  const MultipleAccountsFooter2 = () => (
+    <CardActionFooterV1 secondaryAction={<ButtonV2 variant="outline">Manage</ButtonV2>} primaryAction={<ButtonV2 variant="default" size="sm">Transfer</ButtonV2>}/>
+  );
+
+  // --- Complex Card Layout Data ---\
+  const complexCardLayoutExamples = [
+    {
+      id: '2-complex',
+      title: "2 'Multiple Accounts' Cards per Row",
+      count: 2,
+      minWidth: '400px',
+      cardProps: {
+        title: "Multiple Accounts", // Base title, will append index
+        description: "List of linked accounts",
+        contentProps: { className: 'p-0' },
+        content: <MultipleAccountsCardContent />,
+        footer: <MultipleAccountsFooter1 />
+      }
+    },
+    {
+      id: '3-complex',
+      title: "3 'Multiple Accounts' Cards per Row",
+      count: 3,
+      minWidth: '300px',
+      cardProps: {
+        title: "Multiple Accounts", // Base title, will append index
+        description: "List of linked accounts",
+        contentProps: { className: 'p-0' },
+        content: <MultipleAccountsCardContent />, // Re-use content component
+        footer: <MultipleAccountsFooter2 /> // Use the second footer component
+      }
+    }
+  ];
+
+  // --- Detail Row Example Data ---
+  const stackedAccountInfoData = [
+    {
+      id: 'dr-stacked-1',
+      primaryText: "Primary Checking",
+      secondaryText: "**** **** **** 1234",
+      actionContent: <span className="text-base font-semibold text-foreground">$10,543.21</span>,
+      needsSeparator: false,
+    },
+    {
+      id: 'dr-stacked-2',
+      primaryText: "Savings Account",
+      secondaryText: "**** **** **** 5678",
+      actionContent: <span className="text-base font-semibold text-foreground">$25,801.50</span>,
+      needsSeparator: true,
+    },
+    {
+      id: 'dr-stacked-3',
+      primaryText: "Investment Portfolio",
+      secondaryText: "**** **** **** 9900",
+      actionContent: <span className="text-base font-semibold text-foreground">$115,300.75</span>,
+      needsSeparator: true,
+    },
+  ];
+
+  const textSingleButtonData = [
+    {
+      id: 'dr-single-btn-1',
+      primaryText: "Profile Completion",
+      secondaryText: "Your profile is 80% complete.",
+      actionContent: <ButtonV2 variant="default" size="sm">Complete Profile</ButtonV2>,
+      needsSeparator: false,
+    },
+    {
+      id: 'dr-single-btn-2',
+      primaryText: "Notification Settings",
+      secondaryText: null, // No secondary text for this one
+      actionContent: <ButtonV2 variant="outline">Manage</ButtonV2>,
+      needsSeparator: true,
+    },
+  ];
+
+  const textMultipleButtonData = [ // Only one item in this example
+    {
+      id: 'dr-multi-btn-1',
+      primaryText: "Subscription Status",
+      secondaryText: "Active until Dec 31, 2025",
+      actionContent: (
+        <div className="flex items-center gap-2">
+          <ButtonV2 variant="ghost">Details</ButtonV2> 
+          <ButtonV2 variant="default" size="sm">Cancel</ButtonV2>
+        </div>
+      ),
+      needsSeparator: false,
     },
   ];
 
@@ -250,74 +405,87 @@ export default function TestingPage() {
              <h1 className="text-xl font-semibold">Component Testing Sandbox</h1>
           </div>
           <div className="p-8 space-y-12 flex-1 overflow-y-auto">
-            {/* --- Button Sections --- */}
+            {/* --- Button Section --- */}
             {activeSection === 'button-section' && (
-              <section id="button-section" className="space-y-4">
-                <h2 className="text-2xl font-semibold border-b pb-2">Button Components</h2>
+              <section id="button-section" className="space-y-6">
+                <h2 className="text-2xl font-semibold border-b pb-2">Standard Buttons (Using ButtonV2)</h2>
                 
-                {/* V1: Mapped */}
-                <h3 className="text-xl font-medium">V1: Solid Primary/Secondary</h3>
-                <div className="flex flex-wrap gap-4 items-center p-4 border rounded">
-                  {buttonV1Data.map((btn, index) => (
-                    <ButtonV1 key={`v1-${index}`} {...btn}>{btn.label}</ButtonV1>
-                  ))}
-                </div>
+                {/* Map over categories: Primary, Secondary, Tertiary */}
+                {(Object.keys(standardButtonData) as Array<keyof typeof standardButtonData>).map((category) => {
+                  const categoryData = standardButtonData[category];
+                  return (
+                    <div key={category} className="space-y-3 pt-4">
+                      <h3 className="text-xl font-medium capitalize">{category}</h3>
+                      <div className="p-4 border rounded space-y-4">
+                        {/* Size Variations */}
+                        <div>
+                          <h4 className="text-sm font-semibold mb-2 text-muted-foreground">Sizes</h4>
+                          <div className="flex flex-wrap gap-4 items-center">
+                            {categoryData.sizes.map((btn) => (
+                              <ButtonV2
+                                key={`${category}-size-${btn.size}`}
+                                variant={categoryData.variant} 
+                                size={btn.size}
+                              >
+                                {btn.label}
+                              </ButtonV2>
+                            ))}
+                          </div>
+                        </div>
+                        {/* Icon Variations */}
+                        <div>
+                          <h4 className="text-sm font-semibold mb-2 text-muted-foreground">Icons (Default Size)</h4>
+                          <div className="flex flex-wrap gap-4 items-center">
+                            {categoryData.icons.map((btn, index) => (
+                              <ButtonV2 
+                                key={`${category}-icon-${index}`}
+                                variant={categoryData.variant} 
+                                size="default" 
+                                icon={btn.icon}
+                                iconPosition={btn.iconPosition}
+                              >
+                                {btn.label}
+                              </ButtonV2>
+                            ))}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  );
+                })}
 
-                {/* V2: Mapped */}
-                <h3 className="text-xl font-medium pt-4">V2: Outline/Ghost + Icon</h3>
-                <div className="flex flex-wrap gap-4 items-center p-4 border rounded">
-                  {buttonV2Data.map((btn, index) => (
-                    <ButtonV2 key={`v2-${index}`} {...btn}>{btn.label}</ButtonV2>
-                  ))}
-                </div>
-
-                {/* V3: Mapped */}
-                <h3 className="text-xl font-medium pt-4">V3: Sizes + Loading</h3>
-                <div className="flex flex-wrap gap-4 items-center p-4 border rounded">
-                  {buttonV3SizeData.map((btn, index) => (
-                    <ButtonV3 key={`v3-size-${index}`} {...btn}>{btn.label}</ButtonV3>
-                  ))}
-                </div>
-                <div className="flex flex-wrap gap-4 items-center p-4 border rounded">
-                   {buttonV3LoadingData.map((btn, index) => (
-                    <ButtonV3 key={`v3-loading-${index}`} {...btn}>{btn.label}</ButtonV3>
-                  ))}
-                </div>
-              </section> 
-            )}
-
-            {/* --- V4: Conversational Buttons (Mapped) --- */}
-            {activeSection === 'button-section' && (
-              <section className="space-y-4 pt-6">
-                <h3 className="text-xl font-medium border-b pb-2">V4: Conversational</h3>
-                
-                {/* Solid Fill */}
-                <div className="flex flex-wrap gap-4 items-center p-4 border rounded">
-                  {buttonV4SolidData.map((btn, index) => (
-                    <ButtonV4 key={`v4-solid-${index}`} {...buttonV4BaseProps} {...btn}>{btn.label}</ButtonV4>
-                  ))}
-                </div>
-                
-                {/* Outline Fill */}
-                <div className="flex flex-wrap gap-4 items-center p-4 border rounded">
-                  {buttonV4OutlineData.map((btn, index) => (
-                    <ButtonV4 key={`v4-outline-${index}`} {...buttonV4BaseProps} {...btn}>{btn.label}</ButtonV4>
-                  ))}
-                </div>
-                
-                {/* Ghost Fill */}
-                <div className="flex flex-wrap gap-4 items-center p-4 border rounded">
-                   {buttonV4GhostData.map((btn, index) => (
-                    <ButtonV4 key={`v4-ghost-${index}`} {...buttonV4BaseProps} {...btn}>{btn.label}</ButtonV4>
-                  ))}
-                </div>
-                
-                {/* Loading State */}
-                <div className="flex flex-wrap gap-4 items-center p-4 border rounded">
-                  {buttonV4LoadingData.map((btn, index) => (
-                    <ButtonV4 key={`v4-loading-${index}`} {...buttonV4BaseProps} {...btn}>{btn.label}</ButtonV4>
-                  ))}
-                </div>
+                {/* --- Conversational Buttons (Mapped, using ButtonV2) --- */}
+                <section className="space-y-4 pt-6">
+                  <h2 className="text-xl font-medium border-b pb-2">Conversational Buttons (Using ButtonV2)</h2>
+                  
+                  {/* Solid Fill */}
+                  <div className="p-4 border rounded flex flex-wrap gap-4 items-center">
+                    {conversationalButtonSolidData.map((btn, index) => (
+                      <ButtonV2 key={`convo-solid-${index}`} {...conversationalButtonBaseProps} {...btn}>{btn.label}</ButtonV2>
+                    ))}
+                  </div>
+                  
+                  {/* Outline Fill */}
+                  <div className="p-4 border rounded flex flex-wrap gap-4 items-center">
+                    {conversationalButtonOutlineData.map((btn, index) => (
+                      <ButtonV2 key={`convo-outline-${index}`} {...conversationalButtonBaseProps} {...btn}>{btn.label}</ButtonV2>
+                    ))}
+                  </div>
+                  
+                  {/* Ghost Fill */}
+                  <div className="p-4 border rounded flex flex-wrap gap-4 items-center">
+                      {conversationalButtonGhostData.map((btn, index) => (
+                        <ButtonV2 key={`convo-ghost-${index}`} {...conversationalButtonBaseProps} {...btn}>{btn.label}</ButtonV2>
+                      ))}
+                  </div>
+                  
+                  {/* Loading State */}
+                  <div className="p-4 border rounded flex flex-wrap gap-4 items-center">
+                    {conversationalButtonLoadingData.map((btn, index) => (
+                      <ButtonV2 key={`convo-loading-${index}`} {...conversationalButtonBaseProps} {...btn}>{btn.label}</ButtonV2>
+                    ))}
+                  </div>
+                </section>
               </section>
             )}
 
@@ -336,7 +504,7 @@ export default function TestingPage() {
                       content={<p className="text-3xl font-semibold text-green-700">$5,432.10</p>} 
                       footer={
                         <div className="flex justify-end w-full"> {/* Replaced RowV2 */}
-                          <ButtonV3 size="sm" variant="default">Details</ButtonV3>
+                          <ButtonV2 size="sm" variant="default">Details</ButtonV2>
                         </div>
                       }
                     />
@@ -388,7 +556,7 @@ export default function TestingPage() {
                       footer={ // Use CardActionFooterV1
                         <CardActionFooterV1 
                           secondaryAction={<ButtonV2 variant="outline">Manage Accounts</ButtonV2>} 
-                          primaryAction={<ButtonV3 size="default">Transfer Funds</ButtonV3>}
+                          primaryAction={<ButtonV2 variant="default" size="default">Transfer Funds</ButtonV2>}
                         />
                       }
                     />
@@ -407,7 +575,7 @@ export default function TestingPage() {
                             actionContent={
                               <div className="flex items-center gap-2">
                                 <ButtonV2 variant="ghost">Edit</ButtonV2> 
-                                <ButtonV3 size="sm">Save</ButtonV3>
+                                <ButtonV2 variant="default" size="sm">Save</ButtonV2>
                               </div>
                             }
                             className="px-6 py-3"
@@ -418,7 +586,7 @@ export default function TestingPage() {
                             actionContent={
                               <div className="flex items-center gap-2">
                                 <ButtonV2 variant="outline">View History</ButtonV2> 
-                                <ButtonV3 size="sm">Update</ButtonV3>
+                                <ButtonV2 variant="default" size="sm">Update</ButtonV2>
                               </div>
                             }
                             className="border-t border-border px-6 py-3"
@@ -429,7 +597,7 @@ export default function TestingPage() {
                             actionContent={
                               <div className="flex items-center gap-2">
                                 <ButtonV2 variant="ghost">Activity Log</ButtonV2> 
-                                <ButtonV3 size="sm">Manage</ButtonV3>
+                                <ButtonV2 variant="default" size="sm">Manage</ButtonV2>
                               </div>
                             }
                             className="border-t border-border px-6 py-3"
@@ -478,8 +646,8 @@ export default function TestingPage() {
                       }
                       footer={
                         <CardActionFooterV1 
-                          secondaryAction={<ButtonV4 variant="conversational" fill="outline" size="sm">Decline</ButtonV4>} 
-                          primaryAction={<ButtonV4 variant="conversational" fill="solid" size="sm">Accept</ButtonV4>}
+                          secondaryAction={<ButtonV2 variant="conversational" fill="outline" size="sm">Decline</ButtonV2>} 
+                          primaryAction={<ButtonV2 variant="conversational" fill="solid" size="sm">Accept</ButtonV2>}
                         />
                       }
                     />
@@ -488,71 +656,100 @@ export default function TestingPage() {
               </section> 
             )}
 
-            {/* --- Detail Row Section --- */}
+            {/* --- Detail Row Section (Partially Refactored) --- */}
             {activeSection === 'detail-row-section' && (
               <section id="detail-row-section" className="space-y-8">
                 {/* Updated section id and heading */}
                 <h2 className="text-2xl font-semibold">Detail Row Component</h2>
 
-                {/* Adapted Old Examples */}
+                {/* Stacked Account Info (Mapped) */}
                 <div>
-                  <h3 className="text-lg font-medium mb-2">Stacked Account Info (Adapted)</h3>
-                  <CardV1 className="shadow-none">
-                    {/* Use DetailRowV1 and new props */}
-                    <DetailRowV1 
-                      primaryText="Primary Checking" 
-                      secondaryText="**** **** **** 1234" 
-                      actionContent={<span className="text-base font-semibold text-foreground">$10,543.21</span>} 
-                    />
-                    <DetailRowV1 
-                      primaryText="Savings Account" 
-                      secondaryText="**** **** **** 5678" 
-                      actionContent={<span className="text-base font-semibold text-foreground">$25,801.50</span>} 
-                      className="border-t border-border" // Add separator
-                    />
-                    <DetailRowV1 
-                      primaryText="Investment Portfolio" 
-                      secondaryText="**** **** **** 9900" 
-                      actionContent={<span className="text-base font-semibold text-foreground">$115,300.75</span>} 
-                      className="border-t border-border" // Add separator
-                    />
+                  <h3 className="text-lg font-medium mb-2">Stacked Account Info (Mapped)</h3>
+                  <CardV1 className="shadow-none" contentProps={{ className: 'p-0' }}> {/* Remove card padding */} 
+                    {stackedAccountInfoData.map((row) => (
+                      <DetailRowV1 
+                        key={row.id}
+                        primaryText={row.primaryText}
+                        secondaryText={row.secondaryText}
+                        actionContent={row.actionContent}
+                        // Add padding back to rows, and conditional top border
+                        className={cn("px-6 py-3", row.needsSeparator && "border-t border-border")} 
+                      />
+                    ))}
                   </CardV1>
                 </div>
 
-                {/* New Examples: Left Text + Right Button(s) */}
+                {/* Text + Single Button (Mapped) */}
                  <div>
-                  <h3 className="text-lg font-medium mb-2">Text + Single Button</h3>
-                  <CardV1 className="shadow-none">
-                    <DetailRowV1 
-                      primaryText="Profile Completion"
-                      secondaryText="Your profile is 80% complete."
-                      actionContent={<ButtonV3 size="sm">Complete Profile</ButtonV3>} 
-                    />
-                    <DetailRowV1 
-                      primaryText="Notification Settings"
-                      actionContent={<ButtonV2 variant="outline">Manage</ButtonV2>}
-                       className="border-t border-border" 
-                    />
+                  <h3 className="text-lg font-medium mb-2">Text + Single Button (Mapped)</h3>
+                  <CardV1 className="shadow-none" contentProps={{ className: 'p-0' }}>
+                    {textSingleButtonData.map((row) => (
+                       <DetailRowV1 
+                        key={row.id}
+                        primaryText={row.primaryText}
+                        secondaryText={row.secondaryText}
+                        actionContent={row.actionContent}
+                        className={cn("px-6 py-3", row.needsSeparator && "border-t border-border")} 
+                      />
+                    ))}
                    </CardV1>
                 </div>
 
+                {/* Text + Multiple Buttons (Mapped) */}
                 <div>
-                  <h3 className="text-lg font-medium mb-2">Text + Multiple Buttons</h3>
-                  <CardV1 className="shadow-none">
+                  <h3 className="text-lg font-medium mb-2">Text + Multiple Buttons (Mapped)</h3>
+                  <CardV1 className="shadow-none" contentProps={{ className: 'p-0' }}>
+                    {textMultipleButtonData.map((row) => (
+                       <DetailRowV1 
+                        key={row.id}
+                        primaryText={row.primaryText}
+                        secondaryText={row.secondaryText}
+                        actionContent={row.actionContent}
+                        className={cn("px-6 py-3", row.needsSeparator && "border-t border-border")} 
+                      />
+                    ))}
+                  </CardV1>
+                </div>
+
+                {/* Activity Log Style (Not refactored - uses primaryContent) */}
+                <div>
+                  <h3 className="text-lg font-medium mb-2">Activity Log Style</h3>
+                  <CardV1 className="shadow-none" contentProps={{ className: 'p-0' }}> {/* Remove card padding */} 
+                    {/* Example 1: Using primaryContent */}
                     <DetailRowV1 
-                      primaryText="Subscription Status"
-                      secondaryText="Active until Dec 31, 2025"
-                      actionContent={
-                        <div className="flex items-center gap-2">
-                          <ButtonV2 variant="ghost">Details</ButtonV2> 
-                          <ButtonV3 size="sm">Cancel</ButtonV3>
+                      primaryContent={ // Use primaryContent for the vertical stack
+                        <div className="flex flex-col text-sm"> 
+                          <span className="text-xs text-muted-foreground">Aug 15, 2024</span>
+                          <span className="font-medium">Checking **** 1234</span>
+                          <span className="text-muted-foreground">Coffee Shop Purchase</span>
                         </div>
                       }
+                      actionContent={ // Dollar Amount
+                        <span className="text-sm font-medium text-red-600 whitespace-nowrap"> 
+                          - $5.75
+                        </span>
+                      }
+                      // Add padding and alignment directly to the row
+                      className="items-center px-6 py-3" 
                     />
-                   </CardV1>
+                    {/* Example 2: Using primaryContent */}
+                    <DetailRowV1 
+                      primaryContent={ 
+                        <div className="flex flex-col text-sm"> 
+                          <span className="text-xs text-muted-foreground">Aug 14, 2024</span>
+                          <span className="font-medium">Savings **** 5678</span>
+                          <span className="text-muted-foreground">Mobile Deposit</span>
+                        </div>
+                      }
+                      actionContent={ 
+                        <span className="text-sm font-medium text-green-700 whitespace-nowrap"> 
+                          + $250.00
+                        </span>
+                      }
+                      className="items-center px-6 py-3 border-t border-border"
+                    />
+                  </CardV1>
                 </div>
-
-                {/* Removed old sm/lg examples as component isn't sized */}
 
               </section>
             )}
@@ -589,150 +786,49 @@ export default function TestingPage() {
               </section>
             )}
 
-            {/* --- Card Row Layouts Section --- */}
+            {/* --- Card Row Layouts Section (Refactored) --- */}
             {activeSection === 'card-row-layouts-section' && (
               <section id="card-row-layouts-section" className="space-y-8">
                 <h2 className="text-2xl font-semibold">Card Row Layouts (Flexbox Examples)</h2>
 
-                {/* Example 1: 4 Cards */}
-                <div>
-                  <h3 className="text-lg font-medium mb-2">4 Cards per Row (flex-wrap)</h3>
-                  <div className="flex flex-wrap gap-6 p-4 border rounded">
-                    <CardV1 title="Card 1" content="Content for card 1." className="flex-1 min-w-[250px] shadow-none"/>
-                    <CardV1 title="Card 2" content="Content for card 2." className="flex-1 min-w-[250px] shadow-none"/>
-                    <CardV1 title="Card 3" content="Content for card 3." className="flex-1 min-w-[250px] shadow-none"/>
-                     <CardV1 title="Card 4" content="Content for card 4." className="flex-1 min-w-[250px] shadow-none"/>
+                {/* Simple Card Examples (Mapped) */}
+                {simpleCardLayoutExamples.map((layout) => (
+                  <div key={layout.id}>
+                    <h3 className="text-lg font-medium mb-2">{layout.title}</h3>
+                    <div className="flex flex-wrap gap-6 p-4 border rounded">
+                      {layout.cards.map((card) => (
+                        <CardV1 
+                          key={card.id}
+                          title={card.title}
+                          content={card.content}
+                          className={cn("flex-1 shadow-none", `min-w-[${card.minWidth}]`)}
+                        />
+                      ))}
+                    </div>
                   </div>
-                </div>
+                ))}
 
-                {/* Example 1.5: 3 Cards */}
-                 <div>
-                  <h3 className="text-lg font-medium mb-2">3 Cards per Row (flex-wrap)</h3>
-                  <div className="flex flex-wrap gap-6 p-4 border rounded">
-                    <CardV1 title="Card X" content="Content for card X." className="flex-1 min-w-[250px] shadow-none"/>
-                    <CardV1 title="Card Y" content="Content for card Y." className="flex-1 min-w-[250px] shadow-none"/>
-                    <CardV1 title="Card Z" content="Content for card Z." className="flex-1 min-w-[250px] shadow-none"/>
+                {/* Complex Card Examples (Mapped) */}
+                {complexCardLayoutExamples.map((layout, layoutIndex) => (
+                  <div key={layout.id} className={layoutIndex > 0 ? "pt-6 border-t" : ""}> {/* Add separator for second complex example */} 
+                    <h3 className="text-lg font-medium mb-2">{layout.title}</h3>
+                    <div className="flex flex-wrap gap-6 p-4 border rounded">
+                      {/* Create an array of specified length to map over */}
+                      {Array.from({ length: layout.count }).map((_, cardIndex) => (
+                        <CardV1 
+                          key={`${layout.id}-card-${cardIndex}`}
+                          {...layout.cardProps} // Spread the common props
+                          // Append index to title for uniqueness
+                          title={`${layout.cardProps.title} (${layout.id.startsWith('2') ? 'Card'+(cardIndex+1) : 'Card'+String.fromCharCode(65 + cardIndex)})`}
+                          className={cn("flex-1 shadow-none", `min-w-[${layout.minWidth}]`)}
+                          // Pass content and footer as components
+                          content={layout.cardProps.content} 
+                          footer={layout.cardProps.footer}
+                        />
+                      ))}
+                    </div>
                   </div>
-                </div>
-
-                {/* Example 2: 2 Cards */}
-                 <div>
-                  <h3 className="text-lg font-medium mb-2">2 Cards per Row (flex-wrap)</h3>
-                  <div className="flex flex-wrap gap-6 p-4 border rounded">
-                    <CardV1 title="Card A" content="Content for card A." className="flex-1 min-w-[300px] shadow-none"/>
-                    <CardV1 title="Card B" content="Content for card B." className="flex-1 min-w-[300px] shadow-none"/>
-                  </div>
-                </div>
-
-                {/* Example 3: 1 Card */}
-                <div>
-                  <h3 className="text-lg font-medium mb-2">1 Card per Row (flex-wrap)</h3>
-                   <div className="flex flex-wrap gap-6 p-4 border rounded">
-                    <CardV1 title="Single Card" content="This card takes up available space but will wrap if screen is narrow." className="flex-1 min-w-[200px] shadow-none"/>
-                  </div>
-                </div>
-
-                {/* --- Complex Card Examples in Rows --- */}
-                <div className="pt-6 border-t">
-                  <h3 className="text-lg font-medium mb-2">2 'Multiple Accounts' Cards per Row</h3>
-                  <div className="flex flex-wrap gap-6 p-4 border rounded">
-                    {/* Card Instance 1 */} 
-                    {/* NOTE: Using V1/V2 buttons in footer as per previous state */} 
-                    <CardV1 
-                      title="Multiple Accounts (Card 1)" 
-                      description="List of linked accounts"
-                      className="flex-1 min-w-[400px] shadow-none" 
-                      contentProps={{ className: 'p-0' }} 
-                      content={
-                        <div> 
-                          <DetailRowV1 primaryText="Primary Checking" secondaryText="**** 1234" actionContent={<span className="text-sm font-medium text-green-700">$10,543.21</span>} className="px-6 py-3" />
-                          <DetailRowV1 primaryText="Savings Account" secondaryText="**** 5678" actionContent={<span className="text-sm font-medium text-foreground">$25,801.50</span>} className="border-t border-border px-6 py-3"/>
-                          <DetailRowV1 primaryText="Credit Card" secondaryText="**** 9900 - Due Aug 15" actionContent={<span className="text-sm font-medium text-red-600">-$1,234.56</span>} className="border-t border-border px-6 py-3"/>
-                          <DetailRowV1 primaryText="Investment Portfolio" secondaryText="**** 4321" actionContent={<span className="text-sm font-medium text-blue-600">$115,300.75</span>} className="border-t border-border px-6 py-3"/>
-                        </div>
-                      }
-                      footer={ 
-                        <CardActionFooterV1 secondaryAction={<ButtonV2 variant="outline">Manage Accounts</ButtonV2>} primaryAction={<ButtonV3 size="default">Transfer Funds</ButtonV3>}/>
-                      }
-                    />
-                    {/* Card Instance 2 */}
-                     <CardV1 
-                      title="Multiple Accounts (Card 2)" 
-                      description="List of linked accounts"
-                      className="flex-1 min-w-[400px] shadow-none" 
-                      contentProps={{ className: 'p-0' }} 
-                      content={
-                        <div> 
-                          <DetailRowV1 primaryText="Primary Checking" secondaryText="**** 1234" actionContent={<span className="text-sm font-medium text-green-700">$10,543.21</span>} className="px-6 py-3" />
-                          <DetailRowV1 primaryText="Savings Account" secondaryText="**** 5678" actionContent={<span className="text-sm font-medium text-foreground">$25,801.50</span>} className="border-t border-border px-6 py-3"/>
-                          <DetailRowV1 primaryText="Credit Card" secondaryText="**** 9900 - Due Aug 15" actionContent={<span className="text-sm font-medium text-red-600">-$1,234.56</span>} className="border-t border-border px-6 py-3"/>
-                          <DetailRowV1 primaryText="Investment Portfolio" secondaryText="**** 4321" actionContent={<span className="text-sm font-medium text-blue-600">$115,300.75</span>} className="border-t border-border px-6 py-3"/>
-                        </div>
-                      }
-                      footer={ 
-                        <CardActionFooterV1 secondaryAction={<ButtonV2 variant="outline">Manage Accounts</ButtonV2>} primaryAction={<ButtonV3 size="default">Transfer Funds</ButtonV3>}/>
-                      }
-                    />
-                  </div>
-                </div>
-
-                <div className="pt-6 border-t">
-                  <h3 className="text-lg font-medium mb-2">3 'Multiple Accounts' Cards per Row</h3>
-                  <div className="flex flex-wrap gap-6 p-4 border rounded">
-                     {/* Card Instance 1 */} 
-                     <CardV1 
-                      title="Multiple Accounts (Card A)" 
-                      description="List of linked accounts"
-                      className="flex-1 min-w-[300px] shadow-none" 
-                      contentProps={{ className: 'p-0' }} 
-                      content={
-                        <div> 
-                          <DetailRowV1 primaryText="Primary Checking" secondaryText="**** 1234" actionContent={<span className="text-sm font-medium text-green-700">$10,543.21</span>} className="px-6 py-3" />
-                          <DetailRowV1 primaryText="Savings Account" secondaryText="**** 5678" actionContent={<span className="text-sm font-medium text-foreground">$25,801.50</span>} className="border-t border-border px-6 py-3"/>
-                          <DetailRowV1 primaryText="Credit Card" secondaryText="**** 9900" actionContent={<span className="text-sm font-medium text-red-600">-$1,234.56</span>} className="border-t border-border px-6 py-3"/>
-                        </div>
-                      }
-                      footer={ 
-                        <CardActionFooterV1 secondaryAction={<ButtonV2 variant="outline">Manage</ButtonV2>} primaryAction={<ButtonV3 size="sm">Transfer</ButtonV3>}/>
-                      }
-                    />
-                     {/* Card Instance 2 */}
-                     <CardV1 
-                      title="Multiple Accounts (Card B)" 
-                      description="List of linked accounts"
-                      className="flex-1 min-w-[300px] shadow-none" 
-                      contentProps={{ className: 'p-0' }} 
-                      content={
-                        <div> 
-                          <DetailRowV1 primaryText="Primary Checking" secondaryText="**** 1234" actionContent={<span className="text-sm font-medium text-green-700">$10,543.21</span>} className="px-6 py-3" />
-                          <DetailRowV1 primaryText="Savings Account" secondaryText="**** 5678" actionContent={<span className="text-sm font-medium text-foreground">$25,801.50</span>} className="border-t border-border px-6 py-3"/>
-                          <DetailRowV1 primaryText="Credit Card" secondaryText="**** 9900" actionContent={<span className="text-sm font-medium text-red-600">-$1,234.56</span>} className="border-t border-border px-6 py-3"/>
-                        </div>
-                      }
-                      footer={ 
-                        <CardActionFooterV1 secondaryAction={<ButtonV2 variant="outline">Manage</ButtonV2>} primaryAction={<ButtonV3 size="sm">Transfer</ButtonV3>}/>
-                      }
-                    />
-                     {/* Card Instance 3 */}
-                     <CardV1 
-                      title="Multiple Accounts (Card C)" 
-                      description="List of linked accounts"
-                      className="flex-1 min-w-[300px] shadow-none" 
-                      contentProps={{ className: 'p-0' }} 
-                      content={
-                        <div> 
-                          <DetailRowV1 primaryText="Primary Checking" secondaryText="**** 1234" actionContent={<span className="text-sm font-medium text-green-700">$10,543.21</span>} className="px-6 py-3" />
-                          <DetailRowV1 primaryText="Savings Account" secondaryText="**** 5678" actionContent={<span className="text-sm font-medium text-foreground">$25,801.50</span>} className="border-t border-border px-6 py-3"/>
-                          <DetailRowV1 primaryText="Credit Card" secondaryText="**** 9900" actionContent={<span className="text-sm font-medium text-red-600">-$1,234.56</span>} className="border-t border-border px-6 py-3"/>
-                        </div>
-                      }
-                      footer={ 
-                        <CardActionFooterV1 secondaryAction={<ButtonV2 variant="outline">Manage</ButtonV2>} primaryAction={<ButtonV3 size="sm">Transfer</ButtonV3>}/>
-                      }
-                    />
-                  </div>
-                </div>
-
+                ))}
               </section>
             )}
 

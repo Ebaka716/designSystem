@@ -7,6 +7,8 @@ export interface DetailRowV1Props extends React.HTMLAttributes<HTMLDivElement> {
   primaryText?: React.ReactNode;
   /** Secondary text content (e.g., subtitle, description) */
   secondaryText?: React.ReactNode;
+  /** Custom content for the left side (overrides primary/secondaryText) */
+  primaryContent?: React.ReactNode;
   /** Action content (e.g., Button, Icon, Text) - aligned right */
   actionContent?: React.ReactNode;
 }
@@ -17,12 +19,13 @@ const DetailRowV1 = React.forwardRef<HTMLDivElement, DetailRowV1Props>(
       className,
       primaryText,
       secondaryText,
+      primaryContent,
       actionContent,
       ...props
     },
     ref
   ) => {
-    const hasLeftContent = primaryText || secondaryText;
+    const hasLeftContent = primaryContent || primaryText || secondaryText;
 
     return (
       <div
@@ -33,23 +36,29 @@ const DetailRowV1 = React.forwardRef<HTMLDivElement, DetailRowV1Props>(
         )}
         {...props}
       >
-        {/* Left: Primary & Secondary Text */}
+        {/* Left Content Area */}
         {hasLeftContent && (
-          <div className="flex flex-col flex-1 mr-4"> {/* Added flex-1 and margin */} 
-            {primaryText && (
-              <span className="text-sm font-medium text-foreground truncate"> {/* Added truncate */} 
-                {primaryText}
-              </span>
-            )}
-            {secondaryText && (
-              <span className={cn(
-                  "text-sm text-muted-foreground truncate", // Added truncate
-                  primaryText && "mt-0.5" // Add small top margin if primary text exists
-              )}>
-                {secondaryText}
-              </span>
-            )}
-          </div>
+          primaryContent ? (
+            <div className="flex-1 mr-4">
+              {primaryContent}
+            </div>
+          ) : (
+            <div className="flex flex-col flex-1 mr-4">
+              {primaryText && (
+                <span className="text-sm font-medium text-foreground truncate">
+                  {primaryText}
+                </span>
+              )}
+              {secondaryText && (
+                <span className={cn(
+                    "text-sm text-muted-foreground truncate",
+                    primaryText && "mt-0.5"
+                )}>
+                  {secondaryText}
+                </span>
+              )}
+            </div>
+          )
         )}
 
         {/* Right: Action Content */}
