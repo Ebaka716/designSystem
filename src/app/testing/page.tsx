@@ -59,13 +59,11 @@ import {
 import {
   Table,
   TableBody,
-  TableCaption,
   TableCell,
   TableHead,
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { Skeleton } from "@/components/ui/skeleton";
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
 import {
   LineChart,
@@ -1231,7 +1229,7 @@ export default function TestingPage() {
                           <div className="space-y-0.5">
                             <p className="text-sm font-medium">Bitcoin</p>
                             <p className="text-sm">93,534.95</p>
-                            <p className="text-sm text-green-600">+821.95</p> { /* Added absolute change */}
+                            <p className="text-sm text-green-600">+821.95</p> { /* Added absolute change */ }
                             <p className="text-sm text-green-600">(+0.89%)</p>
                           </div>
                         </div>
@@ -1327,7 +1325,7 @@ export default function TestingPage() {
                             <p className="text-3xl font-semibold">$567,945.00</p>
                             <div className="flex items-baseline space-x-2 pt-1">
                               <span className="text-sm font-medium text-green-600">+$6,148.05 (+1.86%)</span>
-                              <span className="text-xs text-muted-foreground">Today's gain/loss</span>
+                              <span className="text-xs text-muted-foreground">Today&apos;s gain/loss</span>
                             </div>
                           </div>
                           <div className="h-48 w-full">
@@ -1376,7 +1374,7 @@ export default function TestingPage() {
                             <p className="text-3xl font-semibold">$567,945.00</p>
                             <div className="flex items-baseline space-x-2 pt-1">
                               <span className="text-sm font-medium text-green-600">+$6,148.05 (+1.86%)</span>
-                              <span className="text-xs text-muted-foreground">Today's gain/loss</span>
+                              <span className="text-xs text-muted-foreground">Today&apos;s gain/loss</span>
                             </div>
                           </div>
                           <div className="h-48 w-full">
@@ -1425,7 +1423,7 @@ export default function TestingPage() {
                             <p className="text-3xl font-semibold">$567,945.00</p>
                             <div className="flex items-baseline space-x-2 pt-1">
                               <span className="text-sm font-medium text-green-600">+$6,148.05 (+1.86%)</span>
-                              <span className="text-xs text-muted-foreground">Today's gain/loss</span>
+                              <span className="text-xs text-muted-foreground">Today&apos;s gain/loss</span>
                             </div>
                           </div>
                           <div className="h-48 w-full">
