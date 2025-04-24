@@ -12,8 +12,7 @@
 - **Learnings and project insights**
 
 ## Current Focus
-- Decide on the next new component to build (e.g., `Layout`, `CardGraphPlaceholder`).
-- Review documentation for existing non-button components (`CardV1`, `DetailRowV1`, `RowV1`, etc.) for accuracy.
+- Refactor testing page (`src/app/testing/page.tsx`) into sub-pages.
 
 ## Recent Changes
 - Refactored testing page Card Row Layout examples using data mapping.
@@ -43,17 +42,23 @@
 - Fixed `TooltipTrigger` `asChild` issues (removed for icon buttons, added back for sidebar).
 - Refined `CardActionFooterV1` padding (reverted component change, added padding to specific instances on testing page).
 - Committed quick action footer changes to Git.
+- Added Market Movers, Markets, Market News, and Balance Card examples to testing page.
+- Added `recharts` dependency for charts.
+- Increased size of large Balance Card example (`max-w-3xl`).
+- Fixed `recharts` missing dependency build error.
+- Fixed ESLint errors (unused imports, unescaped entities) in `testing/page.tsx`.
 
 ## Next Steps
 - Update Memory Bank files (this task - completed).
-- Decide on the next new component to build (e.g., `Layout`, `CardGraphPlaceholder`).
-- Review documentation for existing non-button components (`CardV1`, `DetailRowV1`, `RowV1`, etc.) for accuracy.
+- Begin refactoring `testing/page.tsx` into sub-pages, starting with creating `src/app/testing/layout.tsx`.
 
 ## Active Decisions & Considerations
 - `ButtonV2` is now the single source of truth for button components.
 - Enhancing an existing component (`ButtonV2`) was preferred over creating `ButtonV5`.
 - Card footer should stick to the bottom of the card (`CardV1` layout change).
 - Prop names in custom components should avoid conflicts with standard HTML attributes (`cardTitle`, `cardContent`).
+- `testing/page.tsx` has become too large and needs refactoring into sub-pages for better maintainability.
+- The refactor will involve creating a shared `layout.tsx` and separate `page.tsx` files for each component section.
 
 ## Patterns & Preferences
 - Following shadcn/ui conventions (`cn` utility, `cva` for variants).

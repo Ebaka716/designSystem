@@ -41,20 +41,25 @@
 - New "Quick Actions" footer examples added to testing page (icons below separator).
   - Examples include Quick Actions only, Standard Footer + Quick Actions, Conversational Footer + Quick Actions.
   - Examples arranged in a responsive grid layout.
+- Market Movers, Markets, Market News, and Balance Card examples added to testing page.
+- Charts implemented using `recharts`.
+- Testing page dependency (`recharts`) and linting issues resolved.
+- Large Balance Card example increased in size.
 
 ## What's Left to Build
 - `Layout` component (v1, v2, v3) and documentation.
-- Potentially other components like `CardGraphPlaceholder`.
+- Refactor `testing/page.tsx` into sub-pages.
 - Documentation updates for `CardV1`, `CardContentSection`, `CardActionRow` if still relevant.
 
 ## Current Status
-- Core components (`ButtonV2`, `CardV1`, `DetailRowV1`, `CardActionFooterV1`, `RowV1`) exist.
+- Core components (`ButtonV2`, `CardV1`, `DetailRowV1`, `CardActionFooterV1`) exist.
 - `ButtonV2` is the consolidated button component.
 - Testing page provides a functional sandbox with examples mostly using data mapping.
 - `DetailRowV1` has been made more flexible with the `primaryContent` prop.
 - `CardV1` supports sticky footer layout.
 - Quick Actions footer pattern demonstrated on testing page.
 - Git history reflects recent refactoring and feature additions.
+- `testing/page.tsx` is functional but large and scheduled for refactoring into sub-pages.
 
 ## Known Issues
 - None currently identified.
@@ -91,3 +96,4 @@
 - Renamed `CardV1` props (`title`->`cardTitle`, `content`->`cardContent`) due to naming conflicts with standard HTML attributes revealed by stricter type checking/linting.
 - Implemented sticky footer layout in `CardV1` using flexbox to ensure footer always appears at the bottom.
 - Refined padding approach for `CardActionFooterV1`, applying it directly to instances in combined examples rather than modifying the component globally.
+- Decided to refactor the `testing/page.tsx` into sub-pages due to increasing size and complexity.

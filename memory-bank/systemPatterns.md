@@ -15,6 +15,7 @@
 - Component library housed within `src/components`, separating custom components from base `ui` components added by shadcn.
 - Documentation potentially intended for a separate `/docs` route or site (structure exists but not implemented).
 - Testing page (`src/app/testing`) serves as a live sandbox for component examples.
+- **Future:** Utilizing Next.js app router with a shared `layout.tsx` and individual `page.tsx` files within sub-directories (e.g., `/testing/button/page.tsx`) for organizing large testing/example pages.
 
 ## Key Technical Decisions
 - Use `shadcn/ui` for component primitives and tooling.

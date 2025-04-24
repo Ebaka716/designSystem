@@ -9,6 +9,7 @@
 - Tailwind CSS
 - shadcn/ui (Component primitives/CLI)
 - lucide-react (Icons)
+- recharts (Charting library)
 
 ## Development Setup
 - 
@@ -19,8 +20,8 @@
 ## Dependencies
 - Core: `next`, `react`, `react-dom`, `typescript`
 - Styling: `tailwindcss`, `postcss`, `autoprefixer`
-- UI/Components: `@radix-ui/*` (via shadcn), `class-variance-authority`, `clsx`, `tailwind-merge`, `lucide-react`
-- shadcn/ui components added: `button`, `card`, `navigation-menu` (removed later), `sidebar`, `separator`, `sheet`, `tooltip`, `input`, `skeleton`.
+- UI/Components: `@radix-ui/*` (via shadcn), `class-variance-authority`, `clsx`, `tailwind-merge`, `lucide-react`, `recharts`
+- shadcn/ui components added: `button`, `card`, `navigation-menu` (removed later), `sidebar`, `separator`, `sheet`, `tooltip`, `input`, `skeleton` (removed later).
 
 ## Tool Usage Patterns
 - `npx create-next-app` for initial project scaffolding.
