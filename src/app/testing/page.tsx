@@ -16,6 +16,11 @@ import {
   ThumbsUp, // Icon for Quick Action
   ThumbsDown, // Icon for Quick Action
   Share2, // Icon for Quick Action
+  Info, // Icon for Market Movers card header
+  Activity, // Icon for Market Movers sidebar entry
+  TrendingUp, // Icon for Markets card
+  Newspaper, // Icon for Market News card
+  Scale, // Icon for Balance Card
 } from 'lucide-react'; 
 
 import { ButtonV2 } from '@/components/Button/v2';
@@ -44,6 +49,32 @@ import {
   TooltipProvider, 
   TooltipTrigger 
 } from "@/components/ui/tooltip"; 
+import { 
+  Select, 
+  SelectContent, 
+  SelectItem, 
+  SelectTrigger, 
+  SelectValue 
+} from "@/components/ui/select";
+import {
+  Table,
+  TableBody,
+  TableCaption,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
+import { Skeleton } from "@/components/ui/skeleton";
+import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
+import {
+  LineChart,
+  Line,
+  YAxis,
+  XAxis,
+  CartesianGrid,
+  ResponsiveContainer,
+} from "recharts"
 
 // --- Helper Icons ---
 const PlaceholderIcon = ({ className }: { className?: string }) => (
@@ -61,6 +92,10 @@ const components = [
   { id: 'detail-row-section', name: 'Detail Row', icon: ListTree }, // Rename Account Detail Row -> Detail Row
   { id: 'card-action-footer-section', name: 'Card Action Footer', icon: FlipHorizontal }, // Add Card Action Footer
   { id: 'card-row-layouts-section', name: 'Card Row Layouts', icon: Rows }, // Add Card Row Layouts
+  { id: 'market-movers-card', name: 'Market Movers Card', icon: Activity }, // New Section
+  { id: 'markets-card', name: 'Markets Card', icon: TrendingUp }, // New Section
+  { id: 'market-news-card', name: 'Market News Card', icon: Newspaper }, // New Section
+  { id: 'balance-card', name: 'Balance Card', icon: Scale }, // New Section
 ];
 
 // --- Collapsible Shadcn Sidebar Component ---
@@ -125,6 +160,64 @@ function CustomSidebarTriggerInternal() {
     </div>
   );
 }
+
+// --- Chart Data (Sample) ---
+const chartData = [
+  { time: '10A', value: 2400 },
+  { time: '11A', value: 2600 },
+  { time: '12P', value: 2500 },
+  { time: '1P', value: 2780 },
+  { time: '2P', value: 2890 },
+  { time: '3P', value: 2950 },
+  { time: '4P', value: 3100 },
+];
+
+// --- Balance Chart Data (Sample) ---
+const balanceChartData = [
+  { date: 'Apr 23, 2024', value: 230000 },
+  { date: 'Jul 23, 2024', value: 250000 },
+  { date: 'Oct 23, 2024', value: 265000 },
+  { date: 'Jan 23, 2025', value: 280000 },
+  { date: 'Mar 23, 2025', value: 340000 },
+  { date: 'Apr 23, 2025', value: 336164.98 },
+];
+
+// --- Market Movers Data ---
+const marketMoversData = [
+  { symbol: 'SOXL', last: '$12.00', change: '+16.62%', volume: '334.0M', positive: true },
+  { symbol: 'NVDA', last: '$106.43', change: '+3.62%', volume: '218.8M', positive: true },
+  { symbol: 'TSLL', last: '$8.74', change: '+6.59%', volume: '163.7M', positive: true },
+  { symbol: 'SQQQ', last: '$32.72', change: '-8.50%', volume: '120.4M', positive: false },
+];
+
+// --- Market News Data (Sample) ---
+const marketNewsData = [
+  {
+    id: 'news1',
+    headline: 'Trump trade war spreads more gloom across businesses worldwide',
+    source: 'Reuters', time: '3:15 PM ET', date: 'Apr-24-2025'
+  },
+  {
+    id: 'news2',
+    headline: 'Wall Street ends higher on tech boost, easing tariff tensions',
+    source: 'Reuters', time: '4:23 PM ET', date: 'Apr-24-2025'
+  },
+  {
+    id: 'news3',
+    headline: 'US labor market holds steady for now; tariffs keep businesses on edge',
+    source: 'Reuters', time: '12:53 PM ET', date: 'Apr-24-2025'
+  },
+  {
+    id: 'news4',
+    headline: 'US durable goods orders soar on aircraft bookings in March',
+    source: 'Reuters', time: '9:11 AM ET', date: 'Apr-24-2025'
+  },
+  {
+    id: 'news5',
+    headline: 'Intel forecasts weak revenue amid trade tensions, shares fall',
+    source: 'Reuters', time: '33 mins ago', date: null // Example with relative time
+  },
+];
 
 // --- Main Page Component ---
 export default function TestingPage() {
@@ -758,6 +851,51 @@ export default function TestingPage() {
                   </CardV1>
                 </div>
 
+                {/* News Item Style (Using primaryContent) */}
+                <div>
+                  <h3 className="text-lg font-medium mb-2">News Item Style</h3>
+                  <CardV1 className="shadow-none" contentProps={{ className: 'p-0' }}>
+                    {
+                      // Use the first item from the sample market news data
+                      marketNewsData.slice(0, 1).map(news => (
+                        <DetailRowV1
+                          key={news.id}
+                          primaryContent={
+                            <div className="flex flex-col">
+                              <a href="#" className="font-medium text-sm hover:underline">
+                                {news.headline}
+                              </a>
+                              <p className="text-xs text-muted-foreground pt-1">
+                                {news.source} · {news.time} {news.date ? `· ${news.date}` : ''}
+                              </p>
+                            </div>
+                          }
+                          className="px-6 py-4" // Add padding
+                        />
+                      ))
+                    }
+                   {/* Add a second example with a border */}
+                    {
+                      marketNewsData.slice(1, 2).map(news => (
+                        <DetailRowV1
+                          key={news.id}
+                          primaryContent={
+                            <div className="flex flex-col">
+                              <a href="#" className="font-medium text-sm hover:underline">
+                                {news.headline}
+                              </a>
+                              <p className="text-xs text-muted-foreground pt-1">
+                                {news.source} · {news.time} {news.date ? `· ${news.date}` : ''}
+                              </p>
+                            </div>
+                          }
+                          className="px-6 py-4 border-t" // Add padding and border
+                        />
+                      ))
+                    }
+                  </CardV1>
+                </div>
+
               </section>
             )}
 
@@ -888,6 +1026,435 @@ export default function TestingPage() {
                     </div>
                   </div>
                 ))}
+              </section>
+            )}
+
+            {/* --- Market Movers Card Section --- */}
+            {activeSection === 'market-movers-card' && (
+              <section id="market-movers-card" className="space-y-8">
+                <h2 className="text-2xl font-semibold">Market Movers Card Example</h2>
+                <div className="max-w-md mx-auto"> { /* Constrain width for demo */ }
+                  <CardV1
+                    className="shadow-md" // Add back shadow for this example
+                    cardTitle={
+                      <div className="flex justify-between items-center">
+                        <span>Market Movers</span>
+                        <ButtonV2 variant="ghost" size="icon" aria-label="Info">
+                          <Info className="size-4" />
+                        </ButtonV2>
+                      </div>
+                    }
+                    description="As of Apr-24-2025 4:10 PM ET" // Example timestamp
+                    contentProps={{ className: 'space-y-4' }} // Add spacing to content area
+                    cardContent={
+                      <>
+                        {/* Filter Section */}
+                        <div className="flex flex-wrap gap-4 justify-between items-end">
+                          <div>
+                            <label className="text-sm font-medium block mb-1.5">Category</label>
+                            <Select defaultValue="most-actives">
+                              <SelectTrigger className="w-[180px]">
+                                <SelectValue placeholder="Select category" />
+                              </SelectTrigger>
+                              <SelectContent>
+                                <SelectItem value="most-actives">Most actives</SelectItem>
+                                <SelectItem value="gainers">Gainers</SelectItem>
+                                <SelectItem value="losers">Losers</SelectItem>
+                              </SelectContent>
+                            </Select>
+                          </div>
+                          <div>
+                            <label className="text-sm font-medium block mb-1.5">Market</label>
+                            <Select defaultValue="all-markets">
+                              <SelectTrigger className="w-[180px]">
+                                <SelectValue placeholder="Select market" />
+                              </SelectTrigger>
+                              <SelectContent>
+                                <SelectItem value="all-markets">Across all markets</SelectItem>
+                                <SelectItem value="nyse">NYSE</SelectItem>
+                                <SelectItem value="nasdaq">NASDAQ</SelectItem>
+                              </SelectContent>
+                            </Select>
+                          </div>
+                        </div>
+
+                        <hr />
+
+                        {/* Table Section */}
+                        <div> { /* Removed negative margin */ }
+                          <Table>
+                            <TableHeader>
+                              <TableRow>
+                                <TableHead className="w-[80px]">Symbol</TableHead>
+                                <TableHead>Last</TableHead>
+                                <TableHead>% Change</TableHead>
+                                <TableHead className="text-right">Volume</TableHead>
+                              </TableRow>
+                            </TableHeader>
+                            <TableBody>
+                              {marketMoversData.map((item) => (
+                                <TableRow key={item.symbol}>
+                                  <TableCell className="font-medium">
+                                    <span className="border-b border-dotted border-foreground pb-0.5">
+                                      {item.symbol}
+                                    </span>
+                                  </TableCell>
+                                  <TableCell>{item.last}</TableCell>
+                                  <TableCell 
+                                    className={cn(
+                                      item.positive ? 'text-green-600' : 'text-red-600'
+                                    )}
+                                  >
+                                    {item.change}
+                                  </TableCell>
+                                  <TableCell className="text-right">{item.volume}</TableCell>
+                                </TableRow>
+                              ))}
+                            </TableBody>
+                          </Table>
+                        </div>
+                      </>
+                    }
+                    footer={
+                      // Changed to a standard small ghost button (default left alignment)
+                      <ButtonV2 variant="ghost" size="sm">
+                        View more
+                      </ButtonV2>
+                    }
+                  />
+                </div>
+              </section>
+            )}
+
+            {/* --- Markets Card Section --- */}
+            {activeSection === 'markets-card' && (
+              <section id="markets-card" className="space-y-8">
+                <h2 className="text-2xl font-semibold">Markets Card Example</h2>
+                <div className="max-w-2xl mx-auto"> { /* Increased width for demo */ }
+                  <CardV1
+                    className="shadow-md"
+                    cardTitle="Markets"
+                    description="U.S. markets closed."
+                    contentProps={{ className: 'space-y-4' }} // Add spacing to content area
+                    cardContent={
+                      <>
+                        {/* Index Section (3 Columns) */}
+                        <div className="grid grid-cols-3 gap-x-6"> { /* Use gap-x for horizontal spacing */ }
+                          {/* DJIA */}
+                          <div className="space-y-1">
+                            <p className="text-sm font-medium">DJIA</p>
+                            <p className="text-lg font-semibold">40,093.40</p>
+                            <p className="text-sm text-green-600">+486.83</p>
+                            <p className="text-sm text-green-600">(+1.23%)</p>
+                            <div className="h-16 w-full mt-2"> { /* Chart Container */ }
+                              <ResponsiveContainer width="100%" height="100%">
+                                <LineChart data={chartData} margin={{ top: 5, right: 5, left: -30, bottom: 5 }}>
+                                  <YAxis domain={['dataMin - 100', 'dataMax + 100']} hide={true} axisLine={false} tickLine={false} />
+                                  <Line type="monotone" dataKey="value" stroke="#2563eb" strokeWidth={2} dot={false} />
+                                </LineChart>
+                              </ResponsiveContainer>
+                            </div>
+                            <div className="flex justify-between text-xs text-muted-foreground pt-1">
+                              <span>T</span>
+                              <span>11A</span>
+                              <span>1P</span>
+                              <span>3P</span>
+                            </div>
+                          </div>
+                          {/* NASDAQ */}
+                          <div className="space-y-1">
+                            <p className="text-sm font-medium">NASDAQ</p>
+                            <p className="text-lg font-semibold">17,166.04</p>
+                            <p className="text-sm text-green-600">+457.99</p>
+                            <p className="text-sm text-green-600">(+2.74%)</p>
+                            <div className="h-16 w-full mt-2"> { /* Chart Container */ }
+                              <ResponsiveContainer width="100%" height="100%">
+                                <LineChart data={chartData} margin={{ top: 5, right: 5, left: -30, bottom: 5 }}>
+                                  <YAxis domain={['dataMin - 100', 'dataMax + 100']} hide={true} axisLine={false} tickLine={false} />
+                                  <Line type="monotone" dataKey="value" stroke="#2563eb" strokeWidth={2} dot={false} />
+                                </LineChart>
+                              </ResponsiveContainer>
+                            </div>
+                            <div className="flex justify-between text-xs text-muted-foreground pt-1">
+                              <span>T</span>
+                              <span>11A</span>
+                              <span>1P</span>
+                              <span>3P</span>
+                            </div>
+                          </div>
+                          {/* S&P 500 */}
+                          <div className="space-y-1">
+                            <p className="text-sm font-medium">S&P 500</p>
+                            <p className="text-lg font-semibold">5,484.77</p>
+                            <p className="text-sm text-green-600">+108.91</p>
+                            <p className="text-sm text-green-600">(+2.03%)</p>
+                            <div className="h-16 w-full mt-2"> { /* Chart Container */ }
+                              <ResponsiveContainer width="100%" height="100%">
+                                <LineChart data={chartData} margin={{ top: 5, right: 5, left: -30, bottom: 5 }}>
+                                  <YAxis domain={['dataMin - 100', 'dataMax + 100']} hide={true} axisLine={false} tickLine={false} />
+                                  <Line type="monotone" dataKey="value" stroke="#2563eb" strokeWidth={2} dot={false} />
+                                </LineChart>
+                              </ResponsiveContainer>
+                            </div>
+                            <div className="flex justify-between text-xs text-muted-foreground pt-1">
+                              <span>T</span>
+                              <span>11A</span>
+                              <span>1P</span>
+                              <span>3P</span>
+                            </div>
+                          </div>
+                        </div>
+
+                        <hr />
+
+                        {/* Commodities/Other Section (4 Columns) */}
+                        <div className="grid grid-cols-4 gap-x-4"> { /* Use gap-x */ }
+                          {/* Crude Oil */}
+                          <div className="space-y-0.5">
+                            <p className="text-sm font-medium">Crude Oil</p>
+                            <p className="text-sm">62.79</p>
+                            <p className="text-sm text-red-600">(0.00%)</p>
+                          </div>
+                          {/* Gold */}
+                          <div className="space-y-0.5">
+                            <p className="text-sm font-medium">Gold</p>
+                            <p className="text-sm">3,348.60</p>
+                            <p className="text-sm text-red-600">(0.00%)</p>
+                          </div>
+                          {/* U.S. 10 Year */}
+                          <div className="space-y-0.5">
+                            <p className="text-sm font-medium">U.S. 10 Year</p>
+                            <p className="text-sm">111.22</p>
+                            <p className="text-sm text-red-600">(0.00%)</p>
+                          </div>
+                          {/* Bitcoin */}
+                          <div className="space-y-0.5">
+                            <p className="text-sm font-medium">Bitcoin</p>
+                            <p className="text-sm">93,534.95</p>
+                            <p className="text-sm text-green-600">+821.95</p> { /* Added absolute change */}
+                            <p className="text-sm text-green-600">(+0.89%)</p>
+                          </div>
+                        </div>
+
+                        {/* Footer Note */}
+                        <p className="text-xs text-muted-foreground pt-2">
+                          Crude Oil and Gold delayed 10 mins
+                        </p>
+                      </>
+                    }
+                    // No footer prop used for this card
+                  />
+                </div>
+              </section>
+            )}
+
+            {/* --- Market News Card Section --- */}
+            {activeSection === 'market-news-card' && (
+              <section id="market-news-card" className="space-y-8">
+                <h2 className="text-2xl font-semibold">Market News Card Example</h2>
+                <div className="max-w-md mx-auto"> { /* Constrain width */ }
+                  <CardV1
+                    className="shadow-md"
+                    cardTitle="Market news"
+                    contentProps={{ className: 'space-y-4' }} // Add spacing to content area
+                    cardContent={
+                      <>
+                        {/* Filter Dropdown */}
+                        <Select defaultValue="top-news">
+                          <SelectTrigger className="w-[180px]">
+                            <SelectValue placeholder="Select news type" />
+                          </SelectTrigger>
+                          <SelectContent>
+                            <SelectItem value="top-news">Top news</SelectItem>
+                            <SelectItem value="my-feed">My Feed</SelectItem>
+                            <SelectItem value="saved">Saved</SelectItem>
+                          </SelectContent>
+                        </Select>
+
+                        {/* News List */}
+                        <div className="space-y-5 pt-2"> { /* Add padding-top and space between items */ }
+                          {marketNewsData.map((news) => (
+                            <div key={news.id}>
+                              <a href="#" className="font-medium text-sm hover:underline">
+                                {news.headline}
+                              </a>
+                              <p className="text-xs text-muted-foreground pt-1">
+                                {news.source} · {news.time} {news.date ? `· ${news.date}` : ''}
+                              </p>
+                            </div>
+                          ))}
+                        </div>
+
+                        <hr className="pt-2" /> { /* Add padding-top to push HR down */ }
+
+                        {/* Pagination */}
+                        <div className="flex justify-end items-center space-x-4 text-sm font-medium">
+                          <span className="text-primary">1</span> { /* Example active page */ }
+                          <a href="#" className="text-muted-foreground hover:text-primary">2</a>
+                          <a href="#" className="text-muted-foreground hover:text-primary">Next</a>
+                        </div>
+                      </>
+                    }
+                    // No footer prop used
+                  />
+                </div>
+              </section>
+            )}
+
+            {/* --- Balance Card Section --- */}
+            {activeSection === 'balance-card' && (
+              <section id="balance-card" className="space-y-8">
+                <h2 className="text-2xl font-semibold">Balance Card Example (Size Variations)</h2>
+                <div className="flex flex-wrap gap-6 items-start"> { /* Flex container for cards */ }
+
+                  {/* Large Version */}
+                  <div className="max-w-3xl w-full"> { /* Wrapper for large size */ }
+                    <h3 className="text-lg font-medium mb-2">Large (max-w-3xl)</h3>
+                    <CardV1
+                      className="shadow-md"
+                      cardTitle={
+                        <div className="flex justify-between items-center">
+                          <span>Balance</span>
+                          <ButtonV2 variant="ghost" size="icon" aria-label="Info">
+                            <Info className="size-4" />
+                          </ButtonV2>
+                        </div>
+                      }
+                      contentProps={{ className: 'space-y-4' }}
+                      cardContent={
+                        <>
+                          <div>
+                            <p className="text-3xl font-semibold">$567,945.00</p>
+                            <div className="flex items-baseline space-x-2 pt-1">
+                              <span className="text-sm font-medium text-green-600">+$6,148.05 (+1.86%)</span>
+                              <span className="text-xs text-muted-foreground">Today's gain/loss</span>
+                            </div>
+                          </div>
+                          <div className="h-48 w-full">
+                            <ResponsiveContainer width="100%" height="100%">
+                              <LineChart data={balanceChartData} margin={{ top: 5, right: 5, left: 5, bottom: 5 }}>
+                                <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="hsl(var(--border))" />
+                                <XAxis dataKey="date" tickFormatter={(value, index) => index === 0 || index === balanceChartData.length - 1 ? value : ''} axisLine={false} tickLine={false} tick={{ fontSize: 12, fill: 'hsl(var(--muted-foreground))' }} dy={10} />
+                                <YAxis orientation="right" domain={['dataMin - 20000', 'dataMax + 20000']} tickFormatter={(value) => `$${(value / 1000).toFixed(1)}K`} axisLine={false} tickLine={false} width={50} tick={{ fontSize: 12, fill: 'hsl(var(--muted-foreground))' }} />
+                                <Line type="monotone" dataKey="value" stroke="#2563eb" strokeWidth={2} dot={false} />
+                              </LineChart>
+                            </ResponsiveContainer>
+                          </div>
+                          <div className="flex justify-center pt-2">
+                            <ToggleGroup type="single" defaultValue="1y" variant="outline">
+                              <ToggleGroupItem value="1m" aria-label="Toggle 1 month">1M</ToggleGroupItem>
+                              <ToggleGroupItem value="ytd" aria-label="Toggle year-to-date">YTD</ToggleGroupItem>
+                              <ToggleGroupItem value="1y" aria-label="Toggle 1 year">1Y</ToggleGroupItem>
+                              <ToggleGroupItem value="3y" aria-label="Toggle 3 year">3Y</ToggleGroupItem>
+                            </ToggleGroup>
+                          </div>
+                        </>
+                      }
+                      footer={
+                        <ButtonV2 variant="ghost" size="sm">View your performance</ButtonV2>
+                      }
+                    />
+                  </div>
+
+                  {/* Medium Version */}
+                  <div className="max-w-md w-full"> { /* Wrapper for medium size */ }
+                    <h3 className="text-lg font-medium mb-2">Medium (max-w-md)</h3>
+                    <CardV1
+                      className="shadow-md"
+                      cardTitle={
+                        <div className="flex justify-between items-center">
+                          <span>Balance</span>
+                          <ButtonV2 variant="ghost" size="icon" aria-label="Info">
+                            <Info className="size-4" />
+                          </ButtonV2>
+                        </div>
+                      }
+                      contentProps={{ className: 'space-y-4' }}
+                      cardContent={
+                        <>
+                          <div>
+                            <p className="text-3xl font-semibold">$567,945.00</p>
+                            <div className="flex items-baseline space-x-2 pt-1">
+                              <span className="text-sm font-medium text-green-600">+$6,148.05 (+1.86%)</span>
+                              <span className="text-xs text-muted-foreground">Today's gain/loss</span>
+                            </div>
+                          </div>
+                          <div className="h-48 w-full">
+                            <ResponsiveContainer width="100%" height="100%">
+                              <LineChart data={balanceChartData} margin={{ top: 5, right: 5, left: 5, bottom: 5 }}>
+                                <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="hsl(var(--border))" />
+                                <XAxis dataKey="date" tickFormatter={(value, index) => index === 0 || index === balanceChartData.length - 1 ? value : ''} axisLine={false} tickLine={false} tick={{ fontSize: 12, fill: 'hsl(var(--muted-foreground))' }} dy={10} />
+                                <YAxis orientation="right" domain={['dataMin - 20000', 'dataMax + 20000']} tickFormatter={(value) => `$${(value / 1000).toFixed(1)}K`} axisLine={false} tickLine={false} width={50} tick={{ fontSize: 12, fill: 'hsl(var(--muted-foreground))' }} />
+                                <Line type="monotone" dataKey="value" stroke="#2563eb" strokeWidth={2} dot={false} />
+                              </LineChart>
+                            </ResponsiveContainer>
+                          </div>
+                          <div className="flex justify-center pt-2">
+                            <ToggleGroup type="single" defaultValue="1y" variant="outline">
+                              <ToggleGroupItem value="1m" aria-label="Toggle 1 month">1M</ToggleGroupItem>
+                              <ToggleGroupItem value="ytd" aria-label="Toggle year-to-date">YTD</ToggleGroupItem>
+                              <ToggleGroupItem value="1y" aria-label="Toggle 1 year">1Y</ToggleGroupItem>
+                              <ToggleGroupItem value="3y" aria-label="Toggle 3 year">3Y</ToggleGroupItem>
+                            </ToggleGroup>
+                          </div>
+                        </>
+                      }
+                      footer={
+                        <ButtonV2 variant="ghost" size="sm">View your performance</ButtonV2>
+                      }
+                    />
+                  </div>
+
+                  {/* Small Version */}
+                  <div className="max-w-sm w-full"> { /* Wrapper for small size */ }
+                    <h3 className="text-lg font-medium mb-2">Small (max-w-sm)</h3>
+                    <CardV1
+                      className="shadow-md"
+                      cardTitle={
+                        <div className="flex justify-between items-center">
+                          <span>Balance</span>
+                          <ButtonV2 variant="ghost" size="icon" aria-label="Info">
+                            <Info className="size-4" />
+                          </ButtonV2>
+                        </div>
+                      }
+                      contentProps={{ className: 'space-y-4' }}
+                      cardContent={
+                        <>
+                          <div>
+                            <p className="text-3xl font-semibold">$567,945.00</p>
+                            <div className="flex items-baseline space-x-2 pt-1">
+                              <span className="text-sm font-medium text-green-600">+$6,148.05 (+1.86%)</span>
+                              <span className="text-xs text-muted-foreground">Today's gain/loss</span>
+                            </div>
+                          </div>
+                          <div className="h-48 w-full">
+                            <ResponsiveContainer width="100%" height="100%">
+                              <LineChart data={balanceChartData} margin={{ top: 5, right: 5, left: 5, bottom: 5 }}>
+                                <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="hsl(var(--border))" />
+                                <XAxis dataKey="date" tickFormatter={(value, index) => index === 0 || index === balanceChartData.length - 1 ? value : ''} axisLine={false} tickLine={false} tick={{ fontSize: 12, fill: 'hsl(var(--muted-foreground))' }} dy={10} />
+                                <YAxis orientation="right" domain={['dataMin - 20000', 'dataMax + 20000']} tickFormatter={(value) => `$${(value / 1000).toFixed(1)}K`} axisLine={false} tickLine={false} width={50} tick={{ fontSize: 12, fill: 'hsl(var(--muted-foreground))' }} />
+                                <Line type="monotone" dataKey="value" stroke="#2563eb" strokeWidth={2} dot={false} />
+                              </LineChart>
+                            </ResponsiveContainer>
+                          </div>
+                          <div className="flex justify-center pt-2">
+                            <ToggleGroup type="single" defaultValue="1y" variant="outline">
+                              <ToggleGroupItem value="1m" aria-label="Toggle 1 month">1M</ToggleGroupItem>
+                              <ToggleGroupItem value="ytd" aria-label="Toggle year-to-date">YTD</ToggleGroupItem>
+                              <ToggleGroupItem value="1y" aria-label="Toggle 1 year">1Y</ToggleGroupItem>
+                              <ToggleGroupItem value="3y" aria-label="Toggle 3 year">3Y</ToggleGroupItem>
+                            </ToggleGroup>
+                          </div>
+                        </>
+                      }
+                      footer={
+                        <ButtonV2 variant="ghost" size="sm">View your performance</ButtonV2>
+                      }
+                    />
+                  </div>
+
+                </div> {/* Close flex container */ }
               </section>
             )}
 
