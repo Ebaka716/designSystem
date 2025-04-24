@@ -35,7 +35,7 @@ import {
 } from "@/components/ui/sidebar";
 import { Button } from "@/components/ui/button"; // Import Button for SidebarTrigger
 import { cn } from "@/lib/utils"; 
-// import { RowV1 } from "@/components/Row/v1"; // Removed - Unused
+// import { RowV2 } from "@/components/Row/v2"; // Removed - Unused
 import { DetailRowV1 } from "@/components/DetailRow/v1"; 
 import { CardActionFooterV1 } from "@/components/CardActionFooter/v1"; 
 import { 
@@ -76,19 +76,21 @@ function AppSidebar({ activeSection, setActiveSection }: { activeSection: string
             <SidebarMenu>
               {components.map((component) => (
                 <Tooltip key={component.id} delayDuration={0}>
-                  <TooltipTrigger asChild>
-                    <SidebarMenuItem>
+                  <SidebarMenuItem>
+                    <TooltipTrigger asChild>
                       <SidebarMenuButton
                         onClick={() => setActiveSection(component.id)}
                         isActive={activeSection === component.id}
                       >
-                        <component.icon className="size-4" />
-                        <span className="group-data-[collapsible=icon]:hidden transition-opacity duration-200">
-                          {component.name}
-                        </span>
+                        <>
+                          <component.icon className="size-4" />
+                          <span className="group-data-[collapsible=icon]:hidden transition-opacity duration-200">
+                            {component.name}
+                          </span>
+                        </>
                       </SidebarMenuButton>
-                    </SidebarMenuItem>
-                  </TooltipTrigger>
+                    </TooltipTrigger>
+                  </SidebarMenuItem>
                   <TooltipContent side="right" className="bg-black text-white">
                     {component.name}
                   </TooltipContent>
@@ -304,6 +306,14 @@ export default function TestingPage() {
   const MultipleAccountsFooter2 = () => (
     <CardActionFooterV1 secondaryAction={<ButtonV2 variant="outline">Manage</ButtonV2>} primaryAction={<ButtonV2 variant="default" size="sm">Transfer</ButtonV2>}/>
   );
+
+  // --- Quick Action Footer Button Data ---
+  const quickActionButtons = [
+    { id: 'copy', label: 'Copy', icon: Copy },
+    { id: 'like', label: 'Like', icon: ThumbsUp },
+    { id: 'dislike', label: 'Dislike', icon: ThumbsDown },
+    { id: 'share', label: 'Share', icon: Share2 },
+  ];
 
   // --- Complex Card Layout Data ---\
   const complexCardLayoutExamples = [
@@ -811,76 +821,21 @@ export default function TestingPage() {
                           This card demonstrates only the quick actions footer.
                         </p>
                       }
-                      footerProps={{ className: 'p-0 flex flex-col' }} 
+                      footerProps={{ className: 'flex flex-col p-0' }}
                       footer={
                         <>
-                          {/* No standard/convo footer here */}
-                          <hr className="border-border w-full" /> 
-                          <div className="flex justify-end items-center gap-1 px-6 pt-2 w-full"> 
-                            <Tooltip delayDuration={0}> <TooltipTrigger> <ButtonV2 variant="ghost" size="icon" aria-label="Copy"> <Copy className="size-4" /> </ButtonV2> </TooltipTrigger> <TooltipContent side="bottom" className="bg-black text-white">Copy</TooltipContent> </Tooltip>
-                            <Tooltip delayDuration={0}> <TooltipTrigger> <ButtonV2 variant="ghost" size="icon" aria-label="Thumbs Up"> <ThumbsUp className="size-4" /> </ButtonV2> </TooltipTrigger> <TooltipContent side="bottom" className="bg-black text-white">Good</TooltipContent> </Tooltip>
-                            <Tooltip delayDuration={0}> <TooltipTrigger> <ButtonV2 variant="ghost" size="icon" aria-label="Thumbs Down"> <ThumbsDown className="size-4" /> </ButtonV2> </TooltipTrigger> <TooltipContent side="bottom" className="bg-black text-white">Bad</TooltipContent> </Tooltip>
-                            <Tooltip delayDuration={0}> <TooltipTrigger> <ButtonV2 variant="ghost" size="icon" aria-label="Share"> <Share2 className="size-4" /> </ButtonV2> </TooltipTrigger> <TooltipContent side="bottom" className="bg-black text-white">Share</TooltipContent> </Tooltip>
-                          </div>
-                        </>
-                      }
-                    />
-
-                    {/* Example 2: Standard Footer + Quick Actions */}
-                    <CardV1
-                      className="shadow-none"
-                      cardTitle="Standard Actions + Quick Actions"
-                      cardContent={
-                        <p className="text-sm text-muted-foreground">
-                          This card demonstrates a standard action footer combined with quick actions below it.
-                        </p>
-                      }
-                      footerProps={{ className: 'p-0 flex flex-col' }} // Keep flex-col layout for footer
-                      footer={
-                        <>
-                          {/* Standard Footer Part */}
-                          <CardActionFooterV1 
-                            primaryAction={<ButtonV2 variant="default" size="default">Save</ButtonV2>}
-                            secondaryAction={<ButtonV2 variant="outline">Cancel</ButtonV2>} 
-                            className="px-6 py-4" 
-                          />
-                          {/* Quick Actions Part (Removed mt-auto wrapper div) */}
-                          <hr className="border-border w-full" /> 
-                          <div className="flex justify-end items-center gap-1 px-6 pt-2 w-full"> 
-                            <Tooltip delayDuration={0}> <TooltipTrigger> <ButtonV2 variant="ghost" size="icon" aria-label="Copy"> <Copy className="size-4" /> </ButtonV2> </TooltipTrigger> <TooltipContent side="bottom" className="bg-black text-white">Copy</TooltipContent> </Tooltip>
-                            <Tooltip delayDuration={0}> <TooltipTrigger> <ButtonV2 variant="ghost" size="icon" aria-label="Thumbs Up"> <ThumbsUp className="size-4" /> </ButtonV2> </TooltipTrigger> <TooltipContent side="bottom" className="bg-black text-white">Good</TooltipContent> </Tooltip>
-                            <Tooltip delayDuration={0}> <TooltipTrigger> <ButtonV2 variant="ghost" size="icon" aria-label="Thumbs Down"> <ThumbsDown className="size-4" /> </ButtonV2> </TooltipTrigger> <TooltipContent side="bottom" className="bg-black text-white">Bad</TooltipContent> </Tooltip>
-                            <Tooltip delayDuration={0}> <TooltipTrigger> <ButtonV2 variant="ghost" size="icon" aria-label="Share"> <Share2 className="size-4" /> </ButtonV2> </TooltipTrigger> <TooltipContent side="bottom" className="bg-black text-white">Share</TooltipContent> </Tooltip>
-                          </div>
-                        </>
-                      }
-                    />
-
-                    {/* Example 3: Conversational Footer + Quick Actions */}
-                    <CardV1
-                      className="shadow-none"
-                      cardTitle="Conversational Actions + Quick Actions"
-                      cardContent={
-                        <p className="text-sm text-muted-foreground">
-                          This card demonstrates a conversational action footer combined with quick actions below it.
-                        </p>
-                      }
-                      footerProps={{ className: 'p-0 flex flex-col' }} // Keep flex-col layout for footer
-                      footer={
-                        <>
-                          {/* Conversational Footer Part */}
-                          <CardActionFooterV1 
-                             primaryAction={<ButtonV2 variant="conversational" fill="solid" size="default">Accept</ButtonV2>}
-                             secondaryAction={<ButtonV2 variant="conversational" fill="outline" size="default">Decline</ButtonV2>} 
-                             className="px-6 py-4" 
-                          />
-                          {/* Quick Actions Part (Removed mt-auto wrapper div) */}
-                          <hr className="border-border w-full" /> 
-                          <div className="flex justify-end items-center gap-1 px-6 pt-2 w-full"> 
-                            <Tooltip delayDuration={0}> <TooltipTrigger> <ButtonV2 variant="ghost" size="icon" aria-label="Copy"> <Copy className="size-4" /> </ButtonV2> </TooltipTrigger> <TooltipContent side="bottom" className="bg-black text-white">Copy</TooltipContent> </Tooltip>
-                            <Tooltip delayDuration={0}> <TooltipTrigger> <ButtonV2 variant="ghost" size="icon" aria-label="Thumbs Up"> <ThumbsUp className="size-4" /> </ButtonV2> </TooltipTrigger> <TooltipContent side="bottom" className="bg-black text-white">Good</TooltipContent> </Tooltip>
-                            <Tooltip delayDuration={0}> <TooltipTrigger> <ButtonV2 variant="ghost" size="icon" aria-label="Thumbs Down"> <ThumbsDown className="size-4" /> </ButtonV2> </TooltipTrigger> <TooltipContent side="bottom" className="bg-black text-white">Bad</TooltipContent> </Tooltip>
-                            <Tooltip delayDuration={0}> <TooltipTrigger> <ButtonV2 variant="ghost" size="icon" aria-label="Share"> <Share2 className="size-4" /> </ButtonV2> </TooltipTrigger> <TooltipContent side="bottom" className="bg-black text-white">Share</TooltipContent> </Tooltip>
+                          <hr className="border-border w-full" />
+                          <div className="w-full pt-3 px-3 mt-3 flex justify-end space-x-1">
+                            {quickActionButtons.map(btn => (
+                              <ButtonV2 
+                                key={btn.id} 
+                                variant="ghost" 
+                                size="icon" 
+                                aria-label={btn.label}
+                              >
+                                <btn.icon className="size-4" />
+                              </ButtonV2>
+                            ))}
                           </div>
                         </>
                       }
