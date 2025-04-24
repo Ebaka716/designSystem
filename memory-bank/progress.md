@@ -45,11 +45,21 @@
 - Charts implemented using `recharts`.
 - Testing page dependency (`recharts`) and linting issues resolved.
 - Large Balance Card example increased in size.
+- **Refactored Testing Sandbox:**
+  - `/testing` route now uses `layout.tsx` for shared UI (sidebar, header).
+  - Examples moved to sub-pages (e.g., `/testing/button/page.tsx`).
+  - Sidebar uses Next.js routing (`<Link>`, `usePathname`).
+  - Root `/testing/page.tsx` simplified to placeholder.
+  - Button and Balance testing pages (`button/page.tsx`, `balance/page.tsx`) cleaned to remove redundant layout elements.
+  - Removed Outline, Ghost, Loading conversational button examples from Button testing page.
+- Git commit pushed to remote `devTree` branch.
 
 ## What's Left to Build
 - `Layout` component (v1, v2, v3) and documentation.
 - Refactor `testing/page.tsx` into sub-pages.
+- **Update:** Clean up remaining testing sub-pages (`card`, `detail-row`, etc.) to remove redundant layout/header elements.
 - Documentation updates for `CardV1`, `CardContentSection`, `CardActionRow` if still relevant.
+- Documentation for `BalanceCard`.
 
 ## Current Status
 - Core components (`ButtonV2`, `CardV1`, `DetailRowV1`, `CardActionFooterV1`) exist.
@@ -60,9 +70,12 @@
 - Quick Actions footer pattern demonstrated on testing page.
 - Git history reflects recent refactoring and feature additions.
 - `testing/page.tsx` is functional but large and scheduled for refactoring into sub-pages.
+- **Update:** Testing sandbox (`/testing`) structure refactored to use `layout.tsx` + sub-pages.
+- **Update:** Button and Balance testing pages are cleaned up; other sub-pages still need cleanup.
 
 ## Known Issues
 - None currently identified.
+- **Update:** Individual testing pages (other than Button, Balance, Market News) likely contain redundant layout elements (headers, sections) that need removal.
 
 ## Evolution of Project Decisions
 - Initial `create-next-app` failed due to directory name; resolved by using a temporary directory and `rsync`.
@@ -97,3 +110,5 @@
 - Implemented sticky footer layout in `CardV1` using flexbox to ensure footer always appears at the bottom.
 - Refined padding approach for `CardActionFooterV1`, applying it directly to instances in combined examples rather than modifying the component globally.
 - Decided to refactor the `testing/page.tsx` into sub-pages due to increasing size and complexity.
+- **Diagnosed nested layout issue** in `/testing` caused by layout definitions in both `layout.tsx` and `page.tsx`.
+- **Adopted standard Next.js App Router pattern:** Define shared UI in `layout.tsx`, render page-specific content in `page.tsx`, use file-based routing for navigation between component example pages.

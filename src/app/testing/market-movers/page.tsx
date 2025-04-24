@@ -31,8 +31,7 @@ const marketMoversData = [
 
 export default function MarketMoversTestingPage() {
   return (
-    <section id="market-movers-card" className="space-y-8">
-      <h2 className="text-2xl font-semibold">Market Movers Card Example</h2>
+    <>
       <div className="max-w-md mx-auto"> { /* Constrain width for demo */ }
         <CardV1
           className="shadow-md" // Add back shadow for this example
@@ -123,6 +122,6 @@ export default function MarketMoversTestingPage() {
           }
         />
       </div>
-    </section>
+    </>
   );
 } 

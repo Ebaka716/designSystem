@@ -15,7 +15,8 @@
 - Component library housed within `src/components`, separating custom components from base `ui` components added by shadcn.
 - Documentation potentially intended for a separate `/docs` route or site (structure exists but not implemented).
 - Testing page (`src/app/testing`) serves as a live sandbox for component examples.
-- **Future:** Utilizing Next.js app router with a shared `layout.tsx` and individual `page.tsx` files within sub-directories (e.g., `/testing/button/page.tsx`) for organizing large testing/example pages.
+- **Testing Sandbox Structure:** The `/testing` route now uses a dedicated `layout.tsx` file (`src/app/testing/layout.tsx`) to provide the common page structure (sidebar, header). Individual component examples reside in their own sub-directories and `page.tsx` files (e.g., `src/app/testing/button/page.tsx`). Navigation between these pages is handled by Next.js routing via `<Link>` components in the shared sidebar. The root `src/app/testing/page.tsx` serves as a landing/placeholder page within the layout.
+- **Future:** Consider if further sub-layouts are needed within `/testing` or other app sections.
 
 ## Key Technical Decisions
 - Use `shadcn/ui` for component primitives and tooling.
@@ -25,6 +26,7 @@
 
 ## Design Patterns
 - **Consolidated Component Pattern:** Features from Button V1-V4 were merged into ButtonV2, controlled by props (`variant`, `fill`, `size`, `loading`, `icon`, `iconPosition`).
+- **Next.js App Router Layouts:** Using `layout.tsx` files to define shared UI structure (like sidebars and headers) for specific route segments (e.g., `/testing`). Page components (`page.tsx`) within that segment render the specific content, nested within the layout.
 - Employing `shadcn/ui` base components and extending/customizing them.
 - Utilizing Tailwind CSS for utility-first styling.
 - Using `cva` for managing component variants, including `compoundVariants` for complex conditional styling (e.g., conversational button fill/rounding).

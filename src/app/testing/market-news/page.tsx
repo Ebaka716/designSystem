@@ -41,8 +41,7 @@ const marketNewsData = [
 
 export default function MarketNewsTestingPage() {
   return (
-    <section id="market-news-card" className="space-y-8">
-      <h2 className="text-2xl font-semibold">Market News Card Example</h2>
+    <>
       <div className="max-w-md mx-auto"> { /* Constrain width */ }
         <CardV1
           className="shadow-md"
@@ -89,6 +88,6 @@ export default function MarketNewsTestingPage() {
           // No footer prop used
         />
       </div>
-    </section>
+    </>
   );
 } 

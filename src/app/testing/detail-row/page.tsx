@@ -80,9 +80,7 @@ export default function DetailRowTestingPage() {
   ];
 
   return (
-    <section id="detail-row-section" className="space-y-8">
-      <h2 className="text-2xl font-semibold">Detail Row Component</h2>
-
+    <>
       {/* Stacked Account Info (Mapped) */}
       <div>
         <h3 className="text-lg font-medium mb-2">Stacked Account Info (Mapped)</h3>
@@ -216,6 +214,6 @@ export default function DetailRowTestingPage() {
           }
         </CardV1>
       </div>
-    </section>
+    </>
   );
 } 

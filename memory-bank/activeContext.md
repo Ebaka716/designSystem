@@ -13,6 +13,7 @@
 
 ## Current Focus
 - Refactor testing page (`src/app/testing/page.tsx`) into sub-pages.
+- **Update:** Clean up remaining testing sub-pages (`card`, `detail-row`, etc.) to align with the new layout structure (removing redundant wrappers/headers).
 
 ## Recent Changes
 - Refactored testing page Card Row Layout examples using data mapping.
@@ -47,10 +48,23 @@
 - Increased size of large Balance Card example (`max-w-3xl`).
 - Fixed `recharts` missing dependency build error.
 - Fixed ESLint errors (unused imports, unescaped entities) in `testing/page.tsx`.
+- **Refactored Testing Sandbox Structure:**
+  - Diagnosed nested layout issue causing duplicated headers/sidebars.
+  - Identified `src/app/testing/layout.tsx` as the source of the outer layout.
+  - Moved primary layout definition (sidebar, header, providers) exclusively to `src/app/testing/layout.tsx`.
+  - Modified sidebar in `layout.tsx` to use Next.js `<Link>` components and `usePathname` for navigation.
+  - Stripped `src/app/testing/page.tsx` down to a basic placeholder, removing all layout, state, and dynamic rendering.
+  - Moved Market News example code into `src/app/testing/market-news/page.tsx`.
+  - Moved Balance Card example code into `src/app/testing/balance/page.tsx`.
+  - Cleaned up `src/app/testing/button/page.tsx` and `src/app/testing/balance/page.tsx` to remove redundant layout wrappers and headers.
+  - Removed Outline, Ghost, and Loading conversational button examples from `src/app/testing/button/page.tsx`.
+- Committed testing page refactor changes to `devTree` branch.
+- Pushed `devTree` branch to remote GitHub repository.
 
 ## Next Steps
-- Update Memory Bank files (this task - completed).
-- Begin refactoring `testing/page.tsx` into sub-pages, starting with creating `src/app/testing/layout.tsx`.
+- Update Memory Bank files (this task - in progress).
+- Clean up remaining testing sub-pages (`card`, `detail-row`, `card-action-footer`, `card-row-layouts`, `market-movers`, `market-news`, `markets`) to remove redundant layout/header elements.
+- Review and potentially update component documentation (`docs/components/*`) to reflect current state (e.g., create docs for Balance Card).
 
 ## Active Decisions & Considerations
 - `ButtonV2` is now the single source of truth for button components.
@@ -59,6 +73,7 @@
 - Prop names in custom components should avoid conflicts with standard HTML attributes (`cardTitle`, `cardContent`).
 - `testing/page.tsx` has become too large and needs refactoring into sub-pages for better maintainability.
 - The refactor will involve creating a shared `layout.tsx` and separate `page.tsx` files for each component section.
+- The testing sandbox (`/testing`) will use a shared `layout.tsx` for the main frame and navigation, with individual component examples isolated in sub-route `page.tsx` files.
 
 ## Patterns & Preferences
 - Following shadcn/ui conventions (`cn` utility, `cva` for variants).
@@ -69,6 +84,7 @@
 - Conditionally rendering component sections or internal structures based on props.
 - Using flexbox for layout, including sticky footers in cards.
 - Handling component padding internally where possible, but overriding via `className` when context requires specific adjustments (e.g., `CardActionFooterV1` padding in combined examples).
+- Utilizing Next.js App Router `layout.tsx` conventions for shared UI is the standard approach for route segments.
 
 ## Learnings & Insights
 - `create-next-app` can be sensitive to parent directory names.
@@ -89,3 +105,6 @@
 - Conflicts between custom prop names and standard HTML attributes can cause subtle type errors or linting issues.
 - Radix UI `Slot` / `asChild` prop requires careful consideration of the child component's structure to avoid errors; sometimes removing `asChild` is the simplest fix.
 - Achieving sticky footers often involves making the parent a flex column and allowing the main content area to grow (`flex-1`).
+- Duplicated UI elements (headers, sidebars) often indicate nested layouts in Next.js, typically involving a `layout.tsx` file applying layout to its child routes/pages.
+- Confirming the existence and content of `layout.tsx` files is crucial when debugging layout issues in the App Router.
+- Refactoring complex pages into layout + sub-page structures improves maintainability and aligns with Next.js conventions.

@@ -9,11 +9,10 @@ import { ArrowLeft } from 'lucide-react';
 
 export default function CardTestingPage() {
   return (
-    <section id="card-section" className="space-y-4">
-      <h2 className="text-2xl font-semibold">Card Components</h2>
-      {/* Card V1 */}
-      <section className="space-y-4">
-        <h3 className="text-xl font-medium border-b pb-2">V1: Basic Structure</h3>
+    <>
+      {/* Card V1 Basic Structure */}
+      <div>
+        <h3 className="text-xl font-medium border-b pb-2 mb-4">V1: Basic Structure</h3>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 p-4 border rounded">
           <CardV1 
             className="shadow-none"
@@ -31,11 +30,11 @@ export default function CardTestingPage() {
           </CardV1>
           <CardV1 cardContent={<p className="text-center text-gray-500">Content Only Card</p>} contentProps={{ className: 'py-8' }} className="shadow-none" />
         </div>
-      </section>
+      </div>
 
-      {/* --- NEW SECTION: Card Examples --- */}
-      <section className="space-y-4 pt-6">
-        <h3 className="text-xl font-medium border-b pb-2">V1: Card Examples</h3>
+      {/* --- Card Examples --- */}
+      <div className="mt-6">
+        <h3 className="text-xl font-medium border-b pb-2 mb-4">V1: Card Examples</h3>
         <div className="space-y-6 p-4 border rounded">
           {/* --- MOVED EXAMPLE: CardV1 + 4 DetailRowV1 + CardActionFooterV1 --- */}
           <CardV1 
@@ -170,7 +169,7 @@ export default function CardTestingPage() {
             }
           />
         </div>
-      </section>
-    </section> 
+      </div>
+    </>
   );
 } 

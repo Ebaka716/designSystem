@@ -22,8 +22,7 @@ const chartData = [
 
 export default function MarketsTestingPage() {
   return (
-    <section id="markets-card" className="space-y-8">
-      <h2 className="text-2xl font-semibold">Markets Card Example</h2>
+    <>
       <div className="max-w-2xl mx-auto"> { /* Increased width for demo */ }
         <CardV1
           className="shadow-md"
@@ -139,6 +138,6 @@ export default function MarketsTestingPage() {
           // No footer prop used for this card
         />
       </div>
-    </section>
+    </>
   );
 } 

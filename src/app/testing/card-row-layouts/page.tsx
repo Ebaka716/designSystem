@@ -97,9 +97,7 @@ export default function CardRowLayoutsTestingPage() {
   ];
 
   return (
-    <section id="card-row-layouts-section" className="space-y-8">
-      <h2 className="text-2xl font-semibold">Card Row Layouts (Flexbox Examples)</h2>
-
+    <>
       {/* Simple Card Examples (Mapped) */}
       {simpleCardLayoutExamples.map((layout) => (
         <div key={layout.id}>
@@ -138,6 +136,6 @@ export default function CardRowLayoutsTestingPage() {
           </div>
         </div>
       ))}
-    </section>
+    </>
   );
 } 

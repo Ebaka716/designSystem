@@ -66,9 +66,7 @@ export default function CardActionFooterTestingPage() {
   ];
 
   return (
-    <section id="card-action-footer-section" className="space-y-8">
-      <h2 className="text-2xl font-semibold">Card Action Footer Component</h2>
-
+    <>
       {/* Standard Primary/Secondary Examples (Mapped) */}
       <div>
         <h3 className="text-lg font-medium mb-2">Standard Button Footer Examples</h3>
@@ -145,6 +143,6 @@ export default function CardActionFooterTestingPage() {
           />
         </div>
       </div>
-    </section>
+    </>
   );
 } 
