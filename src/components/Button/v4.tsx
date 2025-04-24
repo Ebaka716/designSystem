@@ -7,7 +7,7 @@ import { cn } from '@/lib/utils';
 
 // V4 adds a 'conversational' variant with fill options
 const buttonVariantsV4 = cva(
-  'inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50',
+  'inline-flex items-center justify-center whitespace-nowrap rounded-tl-md rounded-tr-md rounded-br-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50',
   {
     variants: {
       variant: {
@@ -22,8 +22,8 @@ const buttonVariantsV4 = cva(
       },
       size: {
         default: 'h-9 px-4 py-2',
-        sm: 'h-8 rounded-md px-3 text-xs',
-        lg: 'h-10 rounded-md px-8 text-base',
+        sm: "h-8 px-3 text-xs",
+        lg: "h-10 px-8 text-base",
       },
     },
     compoundVariants: [

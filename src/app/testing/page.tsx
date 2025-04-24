@@ -11,6 +11,7 @@ import {
   FlipHorizontal, // Icon for CardActionFooter
   Rows, // Icon for Card Row Layouts
   ListTree, // Icon for Detail Row
+  ArrowLeft, // Icon for Conversation Card title
 } from 'lucide-react'; 
 
 import { ButtonV1 } from '@/components/Button/v1';
@@ -35,7 +36,7 @@ import {
 import { Button } from "@/components/ui/button"; // Import Button for SidebarTrigger
 import { cn } from "@/lib/utils"; 
 import { RowV1 } from "@/components/Row/v1"; // Import the new RowV1
-import { DetailRowV1 } from "@/components/DetailRow/v1"; // FIXING the import
+import { DetailRowV1 } from "@/components/DetailRow/v1"; // Correcting the import: DetailRowV1 from correct path
 import { CardActionFooterV1 } from "@/components/CardActionFooter/v1"; // Import CardActionFooterV1
 
 // --- Helper Icons (Keep existing ones) ---
@@ -216,6 +217,7 @@ export default function TestingPage() {
                 <h3 className="text-xl font-medium border-b pb-2">V1: Basic Structure</h3>
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 p-4 border rounded">
                   <CardV1 
+                    className="shadow-none"
                     title="Account Summary" 
                     description="Overview of your main account." 
                     content={<p className="text-3xl font-semibold text-green-700">$5,432.10</p>} 
@@ -225,10 +227,10 @@ export default function TestingPage() {
                       </div>
                     }
                   />
-                  <CardV1 title="Recent Activity">
+                  <CardV1 title="Recent Activity" className="shadow-none">
                     <ul className="text-sm space-y-1 text-gray-700"><li>+ $100.00 (Deposit)</li><li>- $25.50 (Coffee Shop)</li><li>- $12.00 (Lunch)</li></ul>
                   </CardV1>
-                  <CardV1 content={<p className="text-center text-gray-500">Content Only Card</p>} contentProps={{ className: 'py-8' }} />
+                  <CardV1 content={<p className="text-center text-gray-500">Content Only Card</p>} contentProps={{ className: 'py-8' }} className="shadow-none" />
                 </div>
               </section>
 
@@ -238,6 +240,7 @@ export default function TestingPage() {
                 <div className="space-y-6 p-4 border rounded">
                   {/* --- MOVED EXAMPLE: CardV1 + 4 DetailRowV1 + CardActionFooterV1 --- */}
                   <CardV1 
+                    className="shadow-none"
                     title="Multiple Accounts" 
                     description="List of linked accounts"
                     contentProps={{ className: 'p-0' }} // Remove padding from default content area
@@ -279,6 +282,7 @@ export default function TestingPage() {
 
                   {/* --- NEW EXAMPLE: CardV1 + 3 DetailRowV1 (Multiple Buttons) --- */}
                   <CardV1
+                    className="shadow-none"
                     title="Multiple Actions"
                     description="Rows with multiple button actions"
                     contentProps={{ className: 'p-0' }}
@@ -321,6 +325,51 @@ export default function TestingPage() {
                     }
                     // No footer needed for this example
                   />
+
+                  {/* --- NEW EXAMPLE: Conversation Card (Right Aligned Title) --- */}
+                  <CardV1
+                    className="shadow-none"
+                    title={
+                      <div className="flex flex-col items-end text-right"> {/* Right align container */} 
+                        <div className="flex items-center gap-2"> {/* Flex container for icon + text */} 
+                           <ArrowLeft className="size-4 text-muted-foreground" /> {/* Added return icon */} 
+                          <span className="text-lg font-semibold">User Intent</span>
+                        </div>
+                        <span className="text-sm text-muted-foreground">Optional clarification subtext</span>
+                      </div>
+                    }
+                    content={
+                      <div>
+                        <p className="text-sm mb-4">
+                          This is the main content area where the primary information or prompt would go.
+                        </p>
+                        <DetailRowV1 
+                          primaryText="Primary Checking" 
+                          secondaryText="**** 1234" 
+                          actionContent={<span className="text-sm font-medium text-green-700">$10,543.21</span>} 
+                          className="border-t border-border pt-3 mt-3" // Add separator and spacing
+                        />
+                        <DetailRowV1 
+                          primaryText="Savings Account" 
+                          secondaryText="**** 5678" 
+                          actionContent={<span className="text-sm font-medium text-foreground">$25,801.50</span>} 
+                          className="border-t border-border pt-3" // Top border only
+                        />
+                        <DetailRowV1 
+                          primaryText="Credit Card" 
+                          secondaryText="**** 9900" 
+                          actionContent={<span className="text-sm font-medium text-red-600">-$1,234.56</span>} 
+                          className="border-t border-border pt-3" // Top border only
+                        />
+                      </div>
+                    }
+                    footer={
+                      <CardActionFooterV1 
+                        secondaryAction={<ButtonV4 variant="conversational" fill="outline" size="sm">Decline</ButtonV4>} 
+                        primaryAction={<ButtonV4 variant="conversational" fill="solid" size="sm">Accept</ButtonV4>}
+                      />
+                    }
+                  />
                 </div>
               </section>
             </section> 
@@ -358,7 +407,7 @@ export default function TestingPage() {
               {/* Inside Card Examples */}
                <div>
                 <h3 className="text-lg font-medium mb-2">Inside Card 2x2 (p-6)</h3>
-                <CardV1>
+                <CardV1 className="shadow-none">
                   <RowV1 variant="2x2" gapClassName="gap-4">
                     <ContentBlock label="TL" className="min-h-[80px]"/>
                     <ContentBlock label="TR" className="min-h-[80px]"/>
@@ -370,7 +419,7 @@ export default function TestingPage() {
 
               <div>
                 <h3 className="text-lg font-medium mb-2">Inside Card 2+1 (p-6)</h3>
-                 <CardV1>
+                 <CardV1 className="shadow-none">
                   <RowV1 variant="2+1" gapClassName="gap-4">
                     <ContentBlock label="TL" className="min-h-[80px]"/>
                     <ContentBlock label="BL" className="min-h-[80px]"/>
@@ -382,7 +431,7 @@ export default function TestingPage() {
               {/* Specific Account Example */}
               <div>
                 <h3 className="text-lg font-medium mb-2">Inside Card 2+1 (Account Details)</h3>
-                 <CardV1>
+                 <CardV1 className="shadow-none">
                   <RowV1 variant="2+1" gapClassName="gap-x-6 gap-y-2"> {/* Adjust gap */} 
                     {/* Top Left */}
                     <div className="flex flex-col">
@@ -415,7 +464,7 @@ export default function TestingPage() {
               {/* Adapted Old Examples */}
               <div>
                 <h3 className="text-lg font-medium mb-2">Stacked Account Info (Adapted)</h3>
-                <CardV1>
+                <CardV1 className="shadow-none">
                   {/* Use DetailRowV1 and new props */}
                   <DetailRowV1 
                     primaryText="Primary Checking" 
@@ -440,7 +489,7 @@ export default function TestingPage() {
               {/* New Examples: Left Text + Right Button(s) */}
                <div>
                 <h3 className="text-lg font-medium mb-2">Text + Single Button</h3>
-                <CardV1>
+                <CardV1 className="shadow-none">
                   <DetailRowV1 
                     primaryText="Profile Completion"
                     secondaryText="Your profile is 80% complete."
@@ -456,7 +505,7 @@ export default function TestingPage() {
 
               <div>
                 <h3 className="text-lg font-medium mb-2">Text + Multiple Buttons</h3>
-                <CardV1>
+                <CardV1 className="shadow-none">
                   <DetailRowV1 
                     primaryText="Subscription Status"
                     secondaryText="Active until Dec 31, 2025"
@@ -485,6 +534,7 @@ export default function TestingPage() {
                 <div>
                   <h3 className="text-lg font-medium mb-2">Primary Only</h3>
                   <CardV1 
+                    className="shadow-none"
                     title="Confirm Action" 
                     content={<p className="text-sm text-muted-foreground">Are you sure you want to proceed?</p>}
                     footer={
@@ -499,6 +549,7 @@ export default function TestingPage() {
                 <div>
                   <h3 className="text-lg font-medium mb-2">Primary + Secondary</h3>
                   <CardV1 
+                    className="shadow-none"
                     title="Save Changes?" 
                     content={<p className="text-sm text-muted-foreground">You have unsaved changes.</p>}
                     footer={
@@ -514,11 +565,61 @@ export default function TestingPage() {
                 <div>
                   <h3 className="text-lg font-medium mb-2">Secondary Only</h3>
                   <CardV1 
+                    className="shadow-none"
                     title="Information" 
                     content={<p className="text-sm text-muted-foreground">This action cannot be undone.</p>}
                     footer={
                       <CardActionFooterV1 
                         secondaryAction={<ButtonV2 variant="ghost">Dismiss</ButtonV2>}
+                      />
+                    }
+                  />
+                </div>
+              </div>
+
+              {/* --- Conversational Button Examples --- */}
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6 pt-6 border-t">
+                {/* Example 4: Conversational Solid Primary + Outline Secondary */}
+                <div>
+                  <h3 className="text-lg font-medium mb-2">Convo: Solid P + Outline S</h3>
+                  <CardV1 
+                    className="shadow-none"
+                    title="Engage?" 
+                    content={<p className="text-sm text-muted-foreground">Start a conversation?</p>}
+                    footer={
+                      <CardActionFooterV1 
+                        secondaryAction={<ButtonV4 variant="conversational" fill="outline" size="sm">Maybe Later</ButtonV4>} 
+                        primaryAction={<ButtonV4 variant="conversational" fill="solid" size="sm">Start Now</ButtonV4>}
+                      />
+                    }
+                  />
+                </div>
+
+                {/* Example 5: Conversational Solid Primary Only */}
+                <div>
+                  <h3 className="text-lg font-medium mb-2">Convo: Solid Primary Only</h3>
+                  <CardV1 
+                    className="shadow-none"
+                    title="Submit Feedback" 
+                    content={<p className="text-sm text-muted-foreground">Send your thoughts.</p>}
+                    footer={
+                      <CardActionFooterV1 
+                        primaryAction={<ButtonV4 variant="conversational" fill="solid" size="sm">Send</ButtonV4>}
+                      />
+                    }
+                  />
+                </div>
+
+                {/* Example 6: Conversational Ghost Secondary Only */}
+                <div>
+                  <h3 className="text-lg font-medium mb-2">Convo: Ghost Secondary Only</h3>
+                  <CardV1 
+                    className="shadow-none"
+                    title="Reminder Set" 
+                    content={<p className="text-sm text-muted-foreground">We'll notify you later.</p>}
+                    footer={
+                      <CardActionFooterV1 
+                        secondaryAction={<ButtonV4 variant="conversational" fill="ghost" size="sm">Dismiss</ButtonV4>}
                       />
                     }
                   />
@@ -537,10 +638,10 @@ export default function TestingPage() {
               <div>
                 <h3 className="text-lg font-medium mb-2">4 Cards per Row (flex-wrap)</h3>
                 <div className="flex flex-wrap gap-6 p-4 border rounded">
-                  <CardV1 title="Card 1" content="Content for card 1." className="flex-1 min-w-[250px]"/>
-                  <CardV1 title="Card 2" content="Content for card 2." className="flex-1 min-w-[250px]"/>
-                  <CardV1 title="Card 3" content="Content for card 3." className="flex-1 min-w-[250px]"/>
-                   <CardV1 title="Card 4" content="Content for card 4." className="flex-1 min-w-[250px]"/>
+                  <CardV1 title="Card 1" content="Content for card 1." className="flex-1 min-w-[250px] shadow-none"/>
+                  <CardV1 title="Card 2" content="Content for card 2." className="flex-1 min-w-[250px] shadow-none"/>
+                  <CardV1 title="Card 3" content="Content for card 3." className="flex-1 min-w-[250px] shadow-none"/>
+                   <CardV1 title="Card 4" content="Content for card 4." className="flex-1 min-w-[250px] shadow-none"/>
                 </div>
               </div>
 
@@ -548,9 +649,9 @@ export default function TestingPage() {
                <div>
                 <h3 className="text-lg font-medium mb-2">3 Cards per Row (flex-wrap)</h3>
                 <div className="flex flex-wrap gap-6 p-4 border rounded">
-                  <CardV1 title="Card X" content="Content for card X." className="flex-1 min-w-[250px]"/>
-                  <CardV1 title="Card Y" content="Content for card Y." className="flex-1 min-w-[250px]"/>
-                  <CardV1 title="Card Z" content="Content for card Z." className="flex-1 min-w-[250px]"/>
+                  <CardV1 title="Card X" content="Content for card X." className="flex-1 min-w-[250px] shadow-none"/>
+                  <CardV1 title="Card Y" content="Content for card Y." className="flex-1 min-w-[250px] shadow-none"/>
+                  <CardV1 title="Card Z" content="Content for card Z." className="flex-1 min-w-[250px] shadow-none"/>
                 </div>
               </div>
 
@@ -558,8 +659,8 @@ export default function TestingPage() {
                <div>
                 <h3 className="text-lg font-medium mb-2">2 Cards per Row (flex-wrap)</h3>
                 <div className="flex flex-wrap gap-6 p-4 border rounded">
-                  <CardV1 title="Card A" content="Content for card A." className="flex-1 min-w-[300px]"/>
-                  <CardV1 title="Card B" content="Content for card B." className="flex-1 min-w-[300px]"/>
+                  <CardV1 title="Card A" content="Content for card A." className="flex-1 min-w-[300px] shadow-none"/>
+                  <CardV1 title="Card B" content="Content for card B." className="flex-1 min-w-[300px] shadow-none"/>
                 </div>
               </div>
 
@@ -567,7 +668,7 @@ export default function TestingPage() {
               <div>
                 <h3 className="text-lg font-medium mb-2">1 Card per Row (flex-wrap)</h3>
                  <div className="flex flex-wrap gap-6 p-4 border rounded">
-                  <CardV1 title="Single Card" content="This card takes up available space but will wrap if screen is narrow." className="flex-1 min-w-[200px]"/>
+                  <CardV1 title="Single Card" content="This card takes up available space but will wrap if screen is narrow." className="flex-1 min-w-[200px] shadow-none"/>
                 </div>
               </div>
 
@@ -580,7 +681,7 @@ export default function TestingPage() {
                   <CardV1 
                     title="Multiple Accounts (Card 1)" 
                     description="List of linked accounts"
-                    className="flex-1 min-w-[400px]" 
+                    className="flex-1 min-w-[400px] shadow-none" 
                     contentProps={{ className: 'p-0' }} 
                     content={
                       <div> 
@@ -598,7 +699,7 @@ export default function TestingPage() {
                    <CardV1 
                     title="Multiple Accounts (Card 2)" 
                     description="List of linked accounts"
-                    className="flex-1 min-w-[400px]" 
+                    className="flex-1 min-w-[400px] shadow-none" 
                     contentProps={{ className: 'p-0' }} 
                     content={
                       <div> 
@@ -622,7 +723,7 @@ export default function TestingPage() {
                    <CardV1 
                     title="Multiple Accounts (Card A)" 
                     description="List of linked accounts"
-                    className="flex-1 min-w-[300px]" 
+                    className="flex-1 min-w-[300px] shadow-none" 
                     contentProps={{ className: 'p-0' }} 
                     content={
                       <div> 
@@ -639,7 +740,7 @@ export default function TestingPage() {
                    <CardV1 
                     title="Multiple Accounts (Card B)" 
                     description="List of linked accounts"
-                    className="flex-1 min-w-[300px]" 
+                    className="flex-1 min-w-[300px] shadow-none" 
                     contentProps={{ className: 'p-0' }} 
                     content={
                       <div> 
@@ -656,7 +757,7 @@ export default function TestingPage() {
                    <CardV1 
                     title="Multiple Accounts (Card C)" 
                     description="List of linked accounts"
-                    className="flex-1 min-w-[300px]" 
+                    className="flex-1 min-w-[300px] shadow-none" 
                     contentProps={{ className: 'p-0' }} 
                     content={
                       <div> 

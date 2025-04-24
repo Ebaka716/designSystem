@@ -12,8 +12,8 @@
 - **Learnings and project insights**
 
 ## Current Focus
-- Creating ButtonV4 (conversational variant).
-- Cleaning up the testing page (`src/app/testing/page.tsx`).
+- Investigating and resolving the persistent `Module not found` error.
+- Restoring the intended button example structure on the testing page.
 
 ## Recent Changes
 - Scaffolded `Row`, `Card`, `CardContentSection`, and `CardActionRow` components and documentation (V1, V2, V3 for each).
@@ -36,10 +36,20 @@
 - Created `ButtonV4` component (`src/components/Button/v4.tsx`) with `conversational` variant and `solid`/`outline`/`ghost` fill options.
 - Added examples for `ButtonV4` to the testing page.
 - Resolved icon handling type error in `ButtonV4` by using a `span` wrapper instead of `React.cloneElement`.
+- Synchronized `docs/components` documentation with components used on the testing page (deleted unused MD files, created new MD files for RowV1, DetailRowV1, CardActionFooterV1).
+- Initialized Git repository and made initial commit.
+- Updated `src/app/layout.tsx` metadata to set browser tab title to "Design System".
+- Added size variants (sm, default, lg) to `ButtonV1` and `ButtonV2` components and updated their documentation.
+- Updated testing page (`src/app/testing/page.tsx`) to include size examples for ButtonV1/V2.
+- Re-added complex card examples ("Multiple Accounts" in 2/3 card rows) to the "Card Row Layouts" section on the testing page.
+- Removed separator line above footer in the complex card row examples.
+- Committed recent changes (button sizes, card examples) to Git.
+- **Attempted** to reorganize button examples (Primary/Secondary/Tertiary) on testing page, but changes were **reverted**.
 
 ## Next Steps
-- Create documentation for `ButtonV4`.
-- Investigate and resolve the persistent `Module not found` error related to `@/components/AccountDetailRow/v1` on the testing page.
+- **Fix the persistent `Module not found` error.**
+- **Re-apply** the button example reorganization (Primary/Secondary/Tertiary) on the testing page.
+- Clean up button usage within other component examples (e.g., DetailRow, CardActionFooter) to align with the Primary/Secondary/Tertiary classification.
 - Decide on the next component to implement (e.g., `Layout`).
 
 ## Active Decisions & Considerations
@@ -47,6 +57,7 @@
 - The testing page (`src/app/testing/page.tsx`) needs to be a client component (`'use client';`) due to the use of `useState` and the sidebar context.
 - Using CSS Grid for complex layout structures within components (e.g., new `RowV1`).
 - Wrapping icons in styled `span` elements can be a workaround for `React.cloneElement` type issues with certain icon libraries/types.
+- The build server error message for the import seems highly persistent and may require restarting the dev server or clearing caches after fixing the import path.
 
 ## Patterns & Preferences
 - Following shadcn/ui conventions (`cn` utility, `cva` for variants).
@@ -65,4 +76,5 @@
 - Replacing components requires careful removal of all imports and usages throughout the project.
 - Automated edits can sometimes misinterpret complex JSX structures; manual verification or providing full file content can be safer.
 - TypeScript errors with `React.cloneElement` can be tricky, potentially related to prop type inference or library specifics.
-- Build/dev server error messages might sometimes be stale or misleading after multiple quick edits.
+- Build/dev server error messages might sometimes be stale or misleading after multiple quick edits, potentially requiring server restarts.
+- File reverts (manual or automated) can easily undo progress if not carefully managed.

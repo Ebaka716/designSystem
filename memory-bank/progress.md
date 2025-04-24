@@ -27,6 +27,11 @@
 - Examples for `DetailRowV1` and `CardActionFooterV1` added to testing page.
 - `ButtonV4` (conversational variant with fill options) created.
 - Examples for `ButtonV4` added to testing page.
+- Documentation files synchronized with testing page usage (deleted unused, created missing).
+- Git repository initialized and first commit made.
+- Browser tab title updated to 'Design System'.
+- Size variants (sm, default, lg) added to ButtonV1 and ButtonV2.
+- Button documentation and testing page examples updated for new sizes.
 
 ## What's Left to Build
 - `Row` component V2/V3 (layout variants) and documentation (if needed).
@@ -34,13 +39,14 @@
 - Potentially other components like `CardGraphPlaceholder`.
 
 ## Current Status
-- Button, Card, DetailRow, CardActionFooter implementation and documentation (v1-v4 for Button; v1 for others).
+- Button, Card, DetailRow, CardActionFooter, Row implementation and documentation largely synchronized (Button V1-V4, others V1).
 - Testing page provides a functional sandbox with collapsible navigation.
-- Testing page has been cleaned up: examples for CardContentSection, CardActionRow, DatePicker, Combobox, CardV2, CardV3 have been removed.
-- Testing page CardV1 section restructured with more complex examples.
+- Testing page examples cleaned up and somewhat reorganized (e.g., Button structure attempted).
+- Project initialized as a Git repository.
 
 ## Known Issues
-- Persistent `Module not found: Can't resolve '@/components/AccountDetailRow/v1'` error in `src/app/testing/page.tsx` (line 50) despite multiple attempts to fix the import path to `DetailRowV1`. This suggests the error message might be stale or pointing to a different underlying issue.
+- **Persistent** `Module not found: Can't resolve '@/components/AccountDetailRow/v1'` error in `src/app/testing/page.tsx` (line 50) despite multiple attempts to fix the import path to `DetailRowV1`. The error appears in terminal output even after edits claim success. **This is blocking further validation.**
+- Button examples on testing page were reverted unintentionally, losing the Primary/Secondary/Tertiary structure.
 
 ## Evolution of Project Decisions
 - Initial `create-next-app` failed due to directory name; resolved by using a temporary directory and `rsync`.
@@ -55,3 +61,8 @@
 - Cleaned up testing page to focus on core components and reduce clutter.
 - Added `ButtonV4` to explore a more thematic variant.
 - Used a `span` wrapper approach for icon rendering in `ButtonV4` to avoid `React.cloneElement` type errors.
+- Synced component documentation files with active components on testing page.
+- Initialized Git repository.
+- Updated application metadata title.
+- Added size variants to ButtonV1/V2 for consistency.
+- Testing page structure was reorganized for buttons, but this change was lost/reverted.
