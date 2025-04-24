@@ -12,6 +12,10 @@ import {
   Rows, // Icon for Card Row Layouts
   ListTree, // Icon for Detail Row
   ArrowLeft, // Icon for Conversation Card title
+  Copy, // Icon for Quick Action
+  ThumbsUp, // Icon for Quick Action
+  ThumbsDown, // Icon for Quick Action
+  Share2, // Icon for Quick Action
 } from 'lucide-react'; 
 
 import { ButtonV2 } from '@/components/Button/v2';
@@ -207,7 +211,8 @@ export default function TestingPage() {
   ] as const;
 
   // --- Card Action Footer Data Array ---
-  const cardActionFooterExamples = [
+  // SPLIT into Standard and Conversational
+  const standardCardActionFooterExamples = [
     {
       id: 'primary-secondary',
       title: 'Save Changes?',
@@ -229,6 +234,9 @@ export default function TestingPage() {
       primaryAction: null,
       secondaryAction: <ButtonV2 variant="ghost">Dismiss</ButtonV2>,
     },
+  ];
+
+  const conversationalCardActionFooterExamples = [
     {
       id: 'convo-ps',
       title: 'Engage?',
@@ -258,34 +266,34 @@ export default function TestingPage() {
       id: '4-cards',
       title: '4 Cards per Row (flex-wrap)',
       cards: [
-        { id: 'c1', title: 'Card 1', content: 'Content for card 1.', minWidth: '250px' },
-        { id: 'c2', title: 'Card 2', content: 'Content for card 2.', minWidth: '250px' },
-        { id: 'c3', title: 'Card 3', content: 'Content for card 3.', minWidth: '250px' },
-        { id: 'c4', title: 'Card 4', content: 'Content for card 4.', minWidth: '250px' },
+        { id: 'c1', cardTitle: 'Card 1', cardContent: 'Content for card 1.', minWidth: '250px' },
+        { id: 'c2', cardTitle: 'Card 2', cardContent: 'Content for card 2.', minWidth: '250px' },
+        { id: 'c3', cardTitle: 'Card 3', cardContent: 'Content for card 3.', minWidth: '250px' },
+        { id: 'c4', cardTitle: 'Card 4', cardContent: 'Content for card 4.', minWidth: '250px' },
       ],
     },
     {
       id: '3-cards',
       title: '3 Cards per Row (flex-wrap)',
       cards: [
-        { id: 'cX', title: 'Card X', content: 'Content for card X.', minWidth: '250px' },
-        { id: 'cY', title: 'Card Y', content: 'Content for card Y.', minWidth: '250px' },
-        { id: 'cZ', title: 'Card Z', content: 'Content for card Z.', minWidth: '250px' },
+        { id: 'cX', cardTitle: 'Card X', cardContent: 'Content for card X.', minWidth: '250px' },
+        { id: 'cY', cardTitle: 'Card Y', cardContent: 'Content for card Y.', minWidth: '250px' },
+        { id: 'cZ', cardTitle: 'Card Z', cardContent: 'Content for card Z.', minWidth: '250px' },
       ],
     },
     {
       id: '2-cards',
       title: '2 Cards per Row (flex-wrap)',
       cards: [
-        { id: 'cA', title: 'Card A', content: 'Content for card A.', minWidth: '300px' },
-        { id: 'cB', title: 'Card B', content: 'Content for card B.', minWidth: '300px' },
+        { id: 'cA', cardTitle: 'Card A', cardContent: 'Content for card A.', minWidth: '300px' },
+        { id: 'cB', cardTitle: 'Card B', cardContent: 'Content for card B.', minWidth: '300px' },
       ],
     },
     {
       id: '1-card',
       title: '1 Card per Row (flex-wrap)',
       cards: [
-        { id: 's1', title: 'Single Card', content: 'This card takes up available space but will wrap if screen is narrow.', minWidth: '200px' },
+        { id: 's1', cardTitle: 'Single Card', cardContent: 'This card takes up available space but will wrap if screen is narrow.', minWidth: '200px' },
       ],
     },
   ];
@@ -316,10 +324,10 @@ export default function TestingPage() {
       count: 2,
       minWidth: '400px',
       cardProps: {
-        title: "Multiple Accounts", // Base title, will append index
+        cardTitle: "Multiple Accounts",
         description: "List of linked accounts",
         contentProps: { className: 'p-0' },
-        content: <MultipleAccountsCardContent />,
+        cardContent: <MultipleAccountsCardContent />,
         footer: <MultipleAccountsFooter1 />
       }
     },
@@ -329,11 +337,11 @@ export default function TestingPage() {
       count: 3,
       minWidth: '300px',
       cardProps: {
-        title: "Multiple Accounts", // Base title, will append index
+        cardTitle: "Multiple Accounts",
         description: "List of linked accounts",
         contentProps: { className: 'p-0' },
-        content: <MultipleAccountsCardContent />, // Re-use content component
-        footer: <MultipleAccountsFooter2 /> // Use the second footer component
+        cardContent: <MultipleAccountsCardContent />,
+        footer: <MultipleAccountsFooter2 />
       }
     }
   ];
@@ -499,19 +507,19 @@ export default function TestingPage() {
                   <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 p-4 border rounded">
                     <CardV1 
                       className="shadow-none"
-                      title="Account Summary" 
+                      cardTitle="Account Summary" 
                       description="Overview of your main account." 
-                      content={<p className="text-3xl font-semibold text-green-700">$5,432.10</p>} 
+                      cardContent={<p className="text-3xl font-semibold text-green-700">$5,432.10</p>} 
                       footer={
                         <div className="flex justify-end w-full"> {/* Replaced RowV2 */}
                           <ButtonV2 size="sm" variant="default">Details</ButtonV2>
                         </div>
                       }
                     />
-                    <CardV1 title="Recent Activity" className="shadow-none">
+                    <CardV1 cardTitle="Recent Activity" className="shadow-none">
                       <ul className="text-sm space-y-1 text-gray-700"><li>+ $100.00 (Deposit)</li><li>- $25.50 (Coffee Shop)</li><li>- $12.00 (Lunch)</li></ul>
                     </CardV1>
-                    <CardV1 content={<p className="text-center text-gray-500">Content Only Card</p>} contentProps={{ className: 'py-8' }} className="shadow-none" />
+                    <CardV1 cardContent={<p className="text-center text-gray-500">Content Only Card</p>} contentProps={{ className: 'py-8' }} className="shadow-none" />
                   </div>
                 </section>
 
@@ -522,10 +530,10 @@ export default function TestingPage() {
                     {/* --- MOVED EXAMPLE: CardV1 + 4 DetailRowV1 + CardActionFooterV1 --- */}
                     <CardV1 
                       className="shadow-none"
-                      title="Multiple Accounts" 
+                      cardTitle="Multiple Accounts" 
                       description="List of linked accounts"
                       contentProps={{ className: 'p-0' }} // Remove padding from default content area
-                      content={
+                      cardContent={
                         <div> {/* Wrapper for DetailRows */} 
                           <DetailRowV1 
                             primaryText="Primary Checking" 
@@ -564,10 +572,10 @@ export default function TestingPage() {
                     {/* --- NEW EXAMPLE: CardV1 + 3 DetailRowV1 (Multiple Buttons) --- */}
                     <CardV1
                       className="shadow-none"
-                      title="Multiple Actions"
+                      cardTitle="Multiple Actions"
                       description="Rows with multiple button actions"
                       contentProps={{ className: 'p-0' }}
-                      content={
+                      cardContent={
                         <div>
                           <DetailRowV1 
                             primaryText="User Preferences"
@@ -610,7 +618,7 @@ export default function TestingPage() {
                     {/* --- NEW EXAMPLE: Conversation Card (Right Aligned Title) --- */}
                     <CardV1
                       className="shadow-none"
-                      title={
+                      cardTitle={
                         <div className="flex flex-col items-end text-right"> {/* Right align container */} 
                           <div className="flex items-center gap-2"> {/* Flex container for icon + text */} 
                              <ArrowLeft className="size-4 text-muted-foreground" /> {/* Added return icon */} 
@@ -619,7 +627,7 @@ export default function TestingPage() {
                           <span className="text-sm text-muted-foreground">Optional clarification subtext</span>
                         </div>
                       }
-                      content={
+                      cardContent={
                         <div>
                           <p className="text-sm mb-4">
                             This is the main content area where the primary information or prompt would go.
@@ -757,32 +765,139 @@ export default function TestingPage() {
             {/* --- Card Action Footer Section (Mapped) --- */}
             {activeSection === 'card-action-footer-section' && (
               <section id="card-action-footer-section" className="space-y-8">
-                <h2 className="text-2xl font-semibold">Card Action Footer Component (in CardV1)</h2>
+                <h2 className="text-2xl font-semibold">Card Action Footer Component</h2>
 
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                  {cardActionFooterExamples.map((example) => (
-                    <div key={example.id}>
-                      {/* Use a more descriptive title based on the example ID if needed, or use the title from data */} 
-                      <h3 className="text-lg font-medium mb-2 capitalize">{example.id.replace(/-/g, ' ')}</h3> 
-                      <CardV1 
-                        className="shadow-none"
-                        title={example.title} 
-                        content={example.content}
+                {/* Standard Primary/Secondary Examples (Mapped) */}
+                <div>
+                  <h3 className="text-lg font-medium mb-2">Standard Button Footer Examples</h3>
+                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 p-4 border rounded"> {/* Adjusted grid */}
+                    {standardCardActionFooterExamples.map((example) => (
+                      <CardV1
+                        key={example.id}
+                        cardTitle={example.title}
+                        cardContent={example.content}
                         footer={
                           <CardActionFooterV1 
                             primaryAction={example.primaryAction} 
-                            secondaryAction={example.secondaryAction}
+                            secondaryAction={example.secondaryAction} 
                           />
                         }
+                        className="shadow-none"
                       />
-                    </div>
-                  ))}
+                    ))}
+                  </div>
                 </div>
 
-                {/* Note: The original layout had the first 3 examples in one grid and the next 3 
-                     in another with a border-top. This refactor puts them all in one grid. 
-                     Adjust layout if specific grouping is critical. */}
+                {/* Conversational Button Examples (Mapped) */}
+                <div>
+                  <h3 className="text-lg font-medium mb-2">Conversational Button Footer Examples</h3>
+                   <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 p-4 border rounded"> {/* Adjusted grid */}
+                    {conversationalCardActionFooterExamples.map((example) => (
+                      <CardV1
+                        key={example.id}
+                        cardTitle={example.title}
+                        cardContent={example.content}
+                        footer={
+                          <CardActionFooterV1 
+                            primaryAction={example.primaryAction} 
+                            secondaryAction={example.secondaryAction} 
+                          />
+                        }
+                        className="shadow-none"
+                      />
+                    ))}
+                  </div>
+                </div>
 
+                {/* Quick Actions Footer Example */}
+                <div>
+                  <h3 className="text-lg font-medium mb-2">Quick Actions Footer Example</h3>
+                  <div className="p-4 border rounded grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"> 
+                    {/* Example 1: Quick Actions Only */}
+                    <CardV1
+                      className="shadow-none"
+                      cardTitle="Generated Content (Quick Actions Only)"
+                      cardContent={
+                        <p className="text-sm text-muted-foreground">
+                          This card demonstrates only the quick actions footer.
+                        </p>
+                      }
+                      footerProps={{ className: 'p-0 flex flex-col' }} 
+                      footer={
+                        <>
+                          {/* No standard/convo footer here */}
+                          <hr className="border-border w-full" /> 
+                          <div className="flex justify-end items-center gap-1 px-6 pt-2 w-full"> 
+                            <Tooltip delayDuration={0}> <TooltipTrigger> <ButtonV2 variant="ghost" size="icon" aria-label="Copy"> <Copy className="size-4" /> </ButtonV2> </TooltipTrigger> <TooltipContent side="bottom" className="bg-black text-white">Copy</TooltipContent> </Tooltip>
+                            <Tooltip delayDuration={0}> <TooltipTrigger> <ButtonV2 variant="ghost" size="icon" aria-label="Thumbs Up"> <ThumbsUp className="size-4" /> </ButtonV2> </TooltipTrigger> <TooltipContent side="bottom" className="bg-black text-white">Good</TooltipContent> </Tooltip>
+                            <Tooltip delayDuration={0}> <TooltipTrigger> <ButtonV2 variant="ghost" size="icon" aria-label="Thumbs Down"> <ThumbsDown className="size-4" /> </ButtonV2> </TooltipTrigger> <TooltipContent side="bottom" className="bg-black text-white">Bad</TooltipContent> </Tooltip>
+                            <Tooltip delayDuration={0}> <TooltipTrigger> <ButtonV2 variant="ghost" size="icon" aria-label="Share"> <Share2 className="size-4" /> </ButtonV2> </TooltipTrigger> <TooltipContent side="bottom" className="bg-black text-white">Share</TooltipContent> </Tooltip>
+                          </div>
+                        </>
+                      }
+                    />
+
+                    {/* Example 2: Standard Footer + Quick Actions */}
+                    <CardV1
+                      className="shadow-none"
+                      cardTitle="Standard Actions + Quick Actions"
+                      cardContent={
+                        <p className="text-sm text-muted-foreground">
+                          This card demonstrates a standard action footer combined with quick actions below it.
+                        </p>
+                      }
+                      footerProps={{ className: 'p-0 flex flex-col' }} // Keep flex-col layout for footer
+                      footer={
+                        <>
+                          {/* Standard Footer Part */}
+                          <CardActionFooterV1 
+                            primaryAction={<ButtonV2 variant="default" size="default">Save</ButtonV2>}
+                            secondaryAction={<ButtonV2 variant="outline">Cancel</ButtonV2>} 
+                            className="px-6 py-4" 
+                          />
+                          {/* Quick Actions Part (Removed mt-auto wrapper div) */}
+                          <hr className="border-border w-full" /> 
+                          <div className="flex justify-end items-center gap-1 px-6 pt-2 w-full"> 
+                            <Tooltip delayDuration={0}> <TooltipTrigger> <ButtonV2 variant="ghost" size="icon" aria-label="Copy"> <Copy className="size-4" /> </ButtonV2> </TooltipTrigger> <TooltipContent side="bottom" className="bg-black text-white">Copy</TooltipContent> </Tooltip>
+                            <Tooltip delayDuration={0}> <TooltipTrigger> <ButtonV2 variant="ghost" size="icon" aria-label="Thumbs Up"> <ThumbsUp className="size-4" /> </ButtonV2> </TooltipTrigger> <TooltipContent side="bottom" className="bg-black text-white">Good</TooltipContent> </Tooltip>
+                            <Tooltip delayDuration={0}> <TooltipTrigger> <ButtonV2 variant="ghost" size="icon" aria-label="Thumbs Down"> <ThumbsDown className="size-4" /> </ButtonV2> </TooltipTrigger> <TooltipContent side="bottom" className="bg-black text-white">Bad</TooltipContent> </Tooltip>
+                            <Tooltip delayDuration={0}> <TooltipTrigger> <ButtonV2 variant="ghost" size="icon" aria-label="Share"> <Share2 className="size-4" /> </ButtonV2> </TooltipTrigger> <TooltipContent side="bottom" className="bg-black text-white">Share</TooltipContent> </Tooltip>
+                          </div>
+                        </>
+                      }
+                    />
+
+                    {/* Example 3: Conversational Footer + Quick Actions */}
+                    <CardV1
+                      className="shadow-none"
+                      cardTitle="Conversational Actions + Quick Actions"
+                      cardContent={
+                        <p className="text-sm text-muted-foreground">
+                          This card demonstrates a conversational action footer combined with quick actions below it.
+                        </p>
+                      }
+                      footerProps={{ className: 'p-0 flex flex-col' }} // Keep flex-col layout for footer
+                      footer={
+                        <>
+                          {/* Conversational Footer Part */}
+                          <CardActionFooterV1 
+                             primaryAction={<ButtonV2 variant="conversational" fill="solid" size="default">Accept</ButtonV2>}
+                             secondaryAction={<ButtonV2 variant="conversational" fill="outline" size="default">Decline</ButtonV2>} 
+                             className="px-6 py-4" 
+                          />
+                          {/* Quick Actions Part (Removed mt-auto wrapper div) */}
+                          <hr className="border-border w-full" /> 
+                          <div className="flex justify-end items-center gap-1 px-6 pt-2 w-full"> 
+                            <Tooltip delayDuration={0}> <TooltipTrigger> <ButtonV2 variant="ghost" size="icon" aria-label="Copy"> <Copy className="size-4" /> </ButtonV2> </TooltipTrigger> <TooltipContent side="bottom" className="bg-black text-white">Copy</TooltipContent> </Tooltip>
+                            <Tooltip delayDuration={0}> <TooltipTrigger> <ButtonV2 variant="ghost" size="icon" aria-label="Thumbs Up"> <ThumbsUp className="size-4" /> </ButtonV2> </TooltipTrigger> <TooltipContent side="bottom" className="bg-black text-white">Good</TooltipContent> </Tooltip>
+                            <Tooltip delayDuration={0}> <TooltipTrigger> <ButtonV2 variant="ghost" size="icon" aria-label="Thumbs Down"> <ThumbsDown className="size-4" /> </ButtonV2> </TooltipTrigger> <TooltipContent side="bottom" className="bg-black text-white">Bad</TooltipContent> </Tooltip>
+                            <Tooltip delayDuration={0}> <TooltipTrigger> <ButtonV2 variant="ghost" size="icon" aria-label="Share"> <Share2 className="size-4" /> </ButtonV2> </TooltipTrigger> <TooltipContent side="bottom" className="bg-black text-white">Share</TooltipContent> </Tooltip>
+                          </div>
+                        </>
+                      }
+                    />
+                  </div>
+                </div>
               </section>
             )}
 
@@ -799,8 +914,8 @@ export default function TestingPage() {
                       {layout.cards.map((card) => (
                         <CardV1 
                           key={card.id}
-                          title={card.title}
-                          content={card.content}
+                          cardTitle={card.cardTitle}
+                          cardContent={card.cardContent}
                           className={cn("flex-1 shadow-none", `min-w-[${card.minWidth}]`)}
                         />
                       ))}
@@ -819,10 +934,10 @@ export default function TestingPage() {
                           key={`${layout.id}-card-${cardIndex}`}
                           {...layout.cardProps} // Spread the common props
                           // Append index to title for uniqueness
-                          title={`${layout.cardProps.title} (${layout.id.startsWith('2') ? 'Card'+(cardIndex+1) : 'Card'+String.fromCharCode(65 + cardIndex)})`}
+                          cardTitle={`${layout.cardProps.cardTitle} (${layout.id.startsWith('2') ? 'Card'+(cardIndex+1) : 'Card'+String.fromCharCode(65 + cardIndex)})`}
                           className={cn("flex-1 shadow-none", `min-w-[${layout.minWidth}]`)}
                           // Pass content and footer as components
-                          content={layout.cardProps.content} 
+                          cardContent={layout.cardProps.cardContent} 
                           footer={layout.cardProps.footer}
                         />
                       ))}

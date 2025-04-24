@@ -30,8 +30,8 @@ const CardActionFooterV1 = React.forwardRef<
       <div
         ref={ref}
         className={cn(
-          'flex justify-end items-center w-full gap-2', // Right-align actions with a gap
-          className
+          'flex justify-end items-center w-full gap-2', // Right-align actions, gap - REMOVED PADDING
+          className // Allow overriding via className prop
         )}
         {...props}
       >

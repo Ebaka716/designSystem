@@ -10,9 +10,9 @@ import {
 } from '@/components/ui/card'; // Import the base shadcn components
 
 export interface CardV1Props extends React.HTMLAttributes<HTMLDivElement> {
-  title?: React.ReactNode;
+  cardTitle?: React.ReactNode;
   description?: React.ReactNode;
-  content?: React.ReactNode;
+  cardContent?: React.ReactNode;
   footer?: React.ReactNode;
   // Allow passing props specifically to the header, content, and footer wrappers
   headerProps?: React.HTMLAttributes<HTMLDivElement>;
@@ -24,9 +24,9 @@ const CardV1 = React.forwardRef<HTMLDivElement, CardV1Props>(
   (
     {
       className,
-      title,
+      cardTitle,
       description,
-      content,
+      cardContent,
       footer,
       headerProps,
       contentProps,
@@ -37,23 +37,23 @@ const CardV1 = React.forwardRef<HTMLDivElement, CardV1Props>(
     ref
   ) => {
     // Determine if there's any header content
-    const hasHeader = title || description;
+    const hasHeader = cardTitle || description;
     // Determine if there's main content (either via prop or direct children)
-    const hasContent = content || children;
+    const hasContent = cardContent || children;
 
     return (
-      <ShadCard ref={ref} className={cn(className)} {...props}>
+      <ShadCard ref={ref} className={cn("flex flex-col h-full", className)} {...props}>
         {hasHeader && (
           <ShadCardHeader {...headerProps}>
-            {title && <ShadCardTitle>{title}</ShadCardTitle>}
+            {cardTitle && <ShadCardTitle>{cardTitle}</ShadCardTitle>}
             {description && (
               <ShadCardDescription>{description}</ShadCardDescription>
             )}
           </ShadCardHeader>
         )}
         {hasContent && (
-          <ShadCardContent {...contentProps}>
-            {content || children}
+          <ShadCardContent className="flex-1" {...contentProps}>
+            {cardContent || children}
           </ShadCardContent>
         )}
         {footer && (

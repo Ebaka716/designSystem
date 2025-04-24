@@ -23,6 +23,7 @@ const buttonVariantsV2 = cva(
         default: "h-9 px-4 py-2", // Standard padding
         sm: "h-8 rounded-md px-3 text-xs",
         lg: "h-10 rounded-md px-8", // Use text-base implicitly from base
+        icon: "h-9 w-9", // NEW: Icon size
       },
       // Add iconPosition as a primary variant
       iconPosition: {
@@ -52,6 +53,8 @@ const buttonVariantsV2 = cva(
       // Adjust padding for lg size with leading icon
       { size: "lg", hasIcon: true, iconPosition: "leading", className: "pl-6 pr-8" },
       { size: "lg", hasIcon: true, iconPosition: "trailing", className: "pl-8 pr-6" },
+      // NEW: Ensure icon size removes padding and uses correct dimensions
+      { size: "icon", className: "p-0" }, 
       // --- Conversational Variant Styling --- 
       // Override base rounding and apply fill styles ONLY when variant is conversational
       {
