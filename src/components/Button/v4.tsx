@@ -89,10 +89,10 @@ const ButtonV4 = React.forwardRef<HTMLButtonElement, ButtonV4Props>(
     // Icon handling: Render icon directly within a styled span
     const renderIcon = () => {
       if (loading) {
-        return <span className={cn("inline-block size-4 animate-spin", children ? "mr-2" : "")}> <Loader2 /> </span>;
+        return <span className={cn("inline-flex items-center justify-center size-4 animate-spin", children ? "mr-2" : "")}> <Loader2 /> </span>;
       } 
       if (icon) {
-        return <span className={cn("inline-block size-4", children && iconPosition === 'leading' && 'mr-2', children && iconPosition === 'trailing' && 'ml-2')}>{icon}</span>;
+        return <span className={cn("inline-flex items-center justify-center size-4", children && iconPosition === 'leading' && 'mr-2', children && iconPosition === 'trailing' && 'ml-2')}>{icon}</span>;
       }
       return null;
     };

@@ -35,7 +35,7 @@ import {
 import { Button } from "@/components/ui/button"; // Import Button for SidebarTrigger
 import { cn } from "@/lib/utils"; 
 import { RowV1 } from "@/components/Row/v1"; // Import the new RowV1
-import { DetailRowV1 } from "@/components/DetailRow/v1"; // CORRECTED import name and path
+import { DetailRowV1 } from "@/components/DetailRow/v1"; // FIXING the import
 import { CardActionFooterV1 } from "@/components/CardActionFooter/v1"; // Import CardActionFooterV1
 
 // --- Helper Icons (Keep existing ones) ---
@@ -275,7 +275,6 @@ export default function TestingPage() {
                         primaryAction={<ButtonV3 size="default">Transfer Funds</ButtonV3>}
                       />
                     }
-                    footerProps={{ className: 'border-t border-border' }} // Add top border to footer
                   />
 
                   {/* --- NEW EXAMPLE: CardV1 + 3 DetailRowV1 (Multiple Buttons) --- */}
@@ -569,6 +568,107 @@ export default function TestingPage() {
                 <h3 className="text-lg font-medium mb-2">1 Card per Row (flex-wrap)</h3>
                  <div className="flex flex-wrap gap-6 p-4 border rounded">
                   <CardV1 title="Single Card" content="This card takes up available space but will wrap if screen is narrow." className="flex-1 min-w-[200px]"/>
+                </div>
+              </div>
+
+              {/* --- Complex Card Examples in Rows --- */}
+              <div className="pt-6 border-t">
+                <h3 className="text-lg font-medium mb-2">2 'Multiple Accounts' Cards per Row</h3>
+                <div className="flex flex-wrap gap-6 p-4 border rounded">
+                  {/* Card Instance 1 */} 
+                  {/* NOTE: Using V1/V2 buttons in footer as per previous state */} 
+                  <CardV1 
+                    title="Multiple Accounts (Card 1)" 
+                    description="List of linked accounts"
+                    className="flex-1 min-w-[400px]" 
+                    contentProps={{ className: 'p-0' }} 
+                    content={
+                      <div> 
+                        <DetailRowV1 primaryText="Primary Checking" secondaryText="**** 1234" actionContent={<span className="text-sm font-medium text-green-700">$10,543.21</span>} className="px-6 py-3" />
+                        <DetailRowV1 primaryText="Savings Account" secondaryText="**** 5678" actionContent={<span className="text-sm font-medium text-foreground">$25,801.50</span>} className="border-t border-border px-6 py-3"/>
+                        <DetailRowV1 primaryText="Credit Card" secondaryText="**** 9900 - Due Aug 15" actionContent={<span className="text-sm font-medium text-red-600">-$1,234.56</span>} className="border-t border-border px-6 py-3"/>
+                        <DetailRowV1 primaryText="Investment Portfolio" secondaryText="**** 4321" actionContent={<span className="text-sm font-medium text-blue-600">$115,300.75</span>} className="border-t border-border px-6 py-3"/>
+                      </div>
+                    }
+                    footer={ 
+                      <CardActionFooterV1 secondaryAction={<ButtonV2 variant="outline">Manage Accounts</ButtonV2>} primaryAction={<ButtonV3 size="default">Transfer Funds</ButtonV3>}/>
+                    }
+                  />
+                  {/* Card Instance 2 */}
+                   <CardV1 
+                    title="Multiple Accounts (Card 2)" 
+                    description="List of linked accounts"
+                    className="flex-1 min-w-[400px]" 
+                    contentProps={{ className: 'p-0' }} 
+                    content={
+                      <div> 
+                        <DetailRowV1 primaryText="Primary Checking" secondaryText="**** 1234" actionContent={<span className="text-sm font-medium text-green-700">$10,543.21</span>} className="px-6 py-3" />
+                        <DetailRowV1 primaryText="Savings Account" secondaryText="**** 5678" actionContent={<span className="text-sm font-medium text-foreground">$25,801.50</span>} className="border-t border-border px-6 py-3"/>
+                        <DetailRowV1 primaryText="Credit Card" secondaryText="**** 9900 - Due Aug 15" actionContent={<span className="text-sm font-medium text-red-600">-$1,234.56</span>} className="border-t border-border px-6 py-3"/>
+                        <DetailRowV1 primaryText="Investment Portfolio" secondaryText="**** 4321" actionContent={<span className="text-sm font-medium text-blue-600">$115,300.75</span>} className="border-t border-border px-6 py-3"/>
+                      </div>
+                    }
+                    footer={ 
+                      <CardActionFooterV1 secondaryAction={<ButtonV2 variant="outline">Manage Accounts</ButtonV2>} primaryAction={<ButtonV3 size="default">Transfer Funds</ButtonV3>}/>
+                    }
+                  />
+                </div>
+              </div>
+
+              <div className="pt-6 border-t">
+                <h3 className="text-lg font-medium mb-2">3 'Multiple Accounts' Cards per Row</h3>
+                <div className="flex flex-wrap gap-6 p-4 border rounded">
+                   {/* Card Instance 1 */} 
+                   <CardV1 
+                    title="Multiple Accounts (Card A)" 
+                    description="List of linked accounts"
+                    className="flex-1 min-w-[300px]" 
+                    contentProps={{ className: 'p-0' }} 
+                    content={
+                      <div> 
+                        <DetailRowV1 primaryText="Primary Checking" secondaryText="**** 1234" actionContent={<span className="text-sm font-medium text-green-700">$10,543.21</span>} className="px-6 py-3" />
+                        <DetailRowV1 primaryText="Savings Account" secondaryText="**** 5678" actionContent={<span className="text-sm font-medium text-foreground">$25,801.50</span>} className="border-t border-border px-6 py-3"/>
+                        <DetailRowV1 primaryText="Credit Card" secondaryText="**** 9900" actionContent={<span className="text-sm font-medium text-red-600">-$1,234.56</span>} className="border-t border-border px-6 py-3"/>
+                      </div>
+                    }
+                    footer={ 
+                      <CardActionFooterV1 secondaryAction={<ButtonV2 variant="outline">Manage</ButtonV2>} primaryAction={<ButtonV3 size="sm">Transfer</ButtonV3>}/>
+                    }
+                  />
+                   {/* Card Instance 2 */}
+                   <CardV1 
+                    title="Multiple Accounts (Card B)" 
+                    description="List of linked accounts"
+                    className="flex-1 min-w-[300px]" 
+                    contentProps={{ className: 'p-0' }} 
+                    content={
+                      <div> 
+                        <DetailRowV1 primaryText="Primary Checking" secondaryText="**** 1234" actionContent={<span className="text-sm font-medium text-green-700">$10,543.21</span>} className="px-6 py-3" />
+                        <DetailRowV1 primaryText="Savings Account" secondaryText="**** 5678" actionContent={<span className="text-sm font-medium text-foreground">$25,801.50</span>} className="border-t border-border px-6 py-3"/>
+                        <DetailRowV1 primaryText="Credit Card" secondaryText="**** 9900" actionContent={<span className="text-sm font-medium text-red-600">-$1,234.56</span>} className="border-t border-border px-6 py-3"/>
+                      </div>
+                    }
+                    footer={ 
+                      <CardActionFooterV1 secondaryAction={<ButtonV2 variant="outline">Manage</ButtonV2>} primaryAction={<ButtonV3 size="sm">Transfer</ButtonV3>}/>
+                    }
+                  />
+                   {/* Card Instance 3 */}
+                   <CardV1 
+                    title="Multiple Accounts (Card C)" 
+                    description="List of linked accounts"
+                    className="flex-1 min-w-[300px]" 
+                    contentProps={{ className: 'p-0' }} 
+                    content={
+                      <div> 
+                        <DetailRowV1 primaryText="Primary Checking" secondaryText="**** 1234" actionContent={<span className="text-sm font-medium text-green-700">$10,543.21</span>} className="px-6 py-3" />
+                        <DetailRowV1 primaryText="Savings Account" secondaryText="**** 5678" actionContent={<span className="text-sm font-medium text-foreground">$25,801.50</span>} className="border-t border-border px-6 py-3"/>
+                        <DetailRowV1 primaryText="Credit Card" secondaryText="**** 9900" actionContent={<span className="text-sm font-medium text-red-600">-$1,234.56</span>} className="border-t border-border px-6 py-3"/>
+                      </div>
+                    }
+                    footer={ 
+                      <CardActionFooterV1 secondaryAction={<ButtonV2 variant="outline">Manage</ButtonV2>} primaryAction={<ButtonV3 size="sm">Transfer</ButtonV3>}/>
+                    }
+                  />
                 </div>
               </div>
 
