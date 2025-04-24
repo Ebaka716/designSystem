@@ -6,13 +6,8 @@
 - Next.js project setup (`create-next-app`, manual file merge via `rsync`).
 - `shadcn/ui` initialization and configuration.
 - Base `button` component added via `shadcn add`.
-- `Button` component iterations (v1, v2, v3, v4) created in `src/components/Button/`.
-  - v1: Solid primary/secondary (with sizes).
-  - v2: Outline/ghost with icon slot (with sizes).
-  - v3: Size variants (sm, default, lg) and loading state.
-  - v4: Conversational variant with fill options (solid, outline, ghost).
-- Documentation structure set up (`docs/components/Button/`).
-- Markdown documentation generated for Button v1, v2, v3.
+- Consolidated `ButtonV2` component supporting `default`, `outline`, `ghost`, and `conversational` variants with `size`, `icon`, `loading`, and `fill` (for conversational) props.
+- Documentation structure set up (`docs/components/`).
 - `Card` component iterations (v1) created in `src/components/Card/`. (V2/V3 removed from testing page).
 - `CardContentSection` component iterations (v1, v2, v3) created (but examples removed from testing page).
 - `CardActionRow` component iterations (v1, v2, v3) created (but examples removed from testing page).
@@ -20,41 +15,49 @@
 - Testing page (`src/app/testing/page.tsx`) created to display component examples.
 - Collapsible sidebar navigation implemented on testing page using `shadcn/ui` `sidebar` component.
 - Layout adjustments for main content based on sidebar state.
-- New `Row` component (V1 - grid layout) created in `src/components/Row/` (but section hidden on testing page).
+- `RowV1` component (grid layout) created (but section removed from testing page).
   - v1: 2x2 and 2+1 grid layouts.
 - `DetailRowV1` created (replacing `AccountDetailRowV1`) and enhanced with `primaryContent` prop for custom left-side layouts.
 - `CardActionFooterV1` created.
 - Examples for `DetailRowV1` and `CardActionFooterV1` added to testing page.
-- Examples for `ButtonV1-V4` added to testing page.
-- Documentation files synchronized with testing page usage (deleted unused, created missing).
+- Examples for `ButtonV2` (Standard and Conversational) added to testing page.
+- Documentation files updated for `ButtonV2`, `RowV1`, `DetailRowV1`, `CardActionFooterV1`.
 - Git repository initialized and commits made tracking progress.
 - Browser tab title updated to 'Design System'.
-- Size variants (sm, default, lg) added to ButtonV1 and ButtonV2.
-- Button documentation and testing page examples updated for new sizes.
 - Testing page (`src/app/testing/page.tsx`) examples refactored:
-  - Button examples (V1-V4) now use data arrays and mapping for rendering.
-  - Card Action Footer examples now use a data array and mapping for rendering.
+  - Button examples now use data arrays and mapping (Standard and Conversational sections).
+  - Card Action Footer examples now use a data array and mapping.
+  - Card Row Layout examples use data arrays and mapping.
+  - Detail Row examples (partially) use data arrays and mapping.
 - Testing page UI improvements:
   - Sidebar collapse/expand trigger moved into the sidebar header.
   - Tooltips added to sidebar menu items.
-- Specific "Activity Log" style example added using the enhanced `DetailRowV1` with `primaryContent`.
+- Specific "Activity Log" style example added using `DetailRowV1` with `primaryContent`.
 - Card shadows removed from all `CardV1` instances on the testing page.
+- ButtonV2 `icon` size variant added.
+- CardV1 layout updated to support sticky footer (`flex flex-col h-full`, `flex-1` on content).
+- CardV1 `title` and `content` props renamed to `cardTitle` and `cardContent` to avoid HTML attribute conflicts.
+- CardActionFooterV1 now relies on parent/instance padding.
+- New "Quick Actions" footer examples added to testing page (icons below separator).
+  - Examples include Quick Actions only, Standard Footer + Quick Actions, Conversational Footer + Quick Actions.
+  - Examples arranged in a responsive grid layout.
 
 ## What's Left to Build
-- `Row` component V2/V3 (if needed) and documentation. Consider if grid component is still required or if hidden section should be removed entirely.
 - `Layout` component (v1, v2, v3) and documentation.
 - Potentially other components like `CardGraphPlaceholder`.
-- Refactor remaining sections on testing page (e.g., Card Row Layouts, Detail Row examples) using data mapping.
-- Documentation for ButtonV4, RowV1, DetailRowV1, CardActionFooterV1.
+- Documentation updates for `CardV1`, `CardContentSection`, `CardActionRow` if still relevant.
 
 ## Current Status
-- Core components (Button, Card, DetailRow, CardActionFooter) exist with V1 implementations widely used in testing page examples. Button has V1-V4.
-- Testing page provides a functional sandbox with collapsible navigation and some refactored example sections.
+- Core components (`ButtonV2`, `CardV1`, `DetailRowV1`, `CardActionFooterV1`, `RowV1`) exist.
+- `ButtonV2` is the consolidated button component.
+- Testing page provides a functional sandbox with examples mostly using data mapping.
 - `DetailRowV1` has been made more flexible with the `primaryContent` prop.
+- `CardV1` supports sticky footer layout.
+- Quick Actions footer pattern demonstrated on testing page.
 - Git history reflects recent refactoring and feature additions.
 
 ## Known Issues
-- Button examples on testing page were reverted unintentionally, losing the Primary/Secondary/Tertiary structure (though the data mapping refactor may supersede this).
+- None currently identified.
 
 ## Evolution of Project Decisions
 - Initial `create-next-app` failed due to directory name; resolved by using a temporary directory and `rsync`.
@@ -79,3 +82,12 @@
 - Moved sidebar trigger from header into the sidebar itself (first bottom, then top, with alignment logic).
 - Added tooltips to sidebar items using shadcn/ui Tooltip components.
 - Enhanced `DetailRowV1` to accept `primaryContent` prop for more flexible left-side content rendering, enabling the "Activity Log" example layout.
+- Adopted iterative versioning (v1, v2, etc.) within `src/components` - **Evolved:** Consolidated Button V1-V4 into a single enhanced ButtonV2.
+- Removed hidden "Row (Layout)" section from testing page examples entirely.
+- Corrected button display logic on testing page, consolidating onto `ButtonV2`.
+- Decided against using `ButtonV1`/`V3` due to feature limitations compared to `ButtonV2`. Chose to enhance `ButtonV2` instead of creating `ButtonV5`.
+- Added `icon` size to `ButtonV2` for icon-only buttons.
+- Resolved `asChild`/`Slot` issues with `TooltipTrigger` by removing `asChild` for icon buttons and ensuring it's present for sidebar menu items.
+- Renamed `CardV1` props (`title`->`cardTitle`, `content`->`cardContent`) due to naming conflicts with standard HTML attributes revealed by stricter type checking/linting.
+- Implemented sticky footer layout in `CardV1` using flexbox to ensure footer always appears at the bottom.
+- Refined padding approach for `CardActionFooterV1`, applying it directly to instances in combined examples rather than modifying the component globally.

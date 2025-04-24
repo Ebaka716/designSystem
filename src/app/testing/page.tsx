@@ -6,8 +6,8 @@ import {
   CreditCard, // Example icon for Card
   PanelLeftOpen, // Icon for Sidebar Trigger
   PanelLeftClose,
-  Columns, // Icon for Row
-  UserSquare, // Icon for AccountDetailRow
+  // Columns, // Removed - Unused
+  // UserSquare, // Removed - Unused
   FlipHorizontal, // Icon for CardActionFooter
   Rows, // Icon for Card Row Layouts
   ListTree, // Icon for Detail Row
@@ -23,7 +23,7 @@ import { CardV1 } from '@/components/Card/v1';
 import {
   SidebarProvider,
   Sidebar,
-  SidebarTrigger,
+  // SidebarTrigger, // Removed - Unused (using CustomSidebarTriggerInternal)
   SidebarContent,
   SidebarGroup,
   SidebarGroupLabel,
@@ -35,31 +35,24 @@ import {
 } from "@/components/ui/sidebar";
 import { Button } from "@/components/ui/button"; // Import Button for SidebarTrigger
 import { cn } from "@/lib/utils"; 
-import { RowV1 } from "@/components/Row/v1"; // Import the new RowV1
-import { DetailRowV1 } from "@/components/DetailRow/v1"; // Correcting the import: DetailRowV1 from correct path
-import { CardActionFooterV1 } from "@/components/CardActionFooter/v1"; // Import CardActionFooterV1
+// import { RowV1 } from "@/components/Row/v1"; // Removed - Unused
+import { DetailRowV1 } from "@/components/DetailRow/v1"; 
+import { CardActionFooterV1 } from "@/components/CardActionFooter/v1"; 
 import { 
   Tooltip, 
   TooltipContent, 
   TooltipProvider, 
   TooltipTrigger 
-} from "@/components/ui/tooltip"; // Import Tooltip components
+} from "@/components/ui/tooltip"; 
 
-// --- Helper Icons (Keep existing ones) ---
+// --- Helper Icons ---
 const PlaceholderIcon = ({ className }: { className?: string }) => (
   <svg className={className} xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10" /></svg>
 );
-const SettingsIcon = () => <span>⚙️</span>;
-const UserIcon = () => <span>👤</span>;
-const InfoIcon = () => <span>ℹ️</span>;
-const MoreVerticalIcon = () => (
-  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="1"/><circle cx="12" cy="5" r="1"/><circle cx="12" cy="19" r="1"/></svg>
-);
+// Removed unused helper icons: SettingsIcon, UserIcon, InfoIcon, MoreVerticalIcon
 
 // Placeholder for content blocks
-const ContentBlock = ({ label, className }: { label: string, className?: string }) => (
-  <div className={cn("flex items-center justify-center p-6 border rounded bg-muted h-full min-h-[100px] text-muted-foreground text-sm", className)}>{label}</div>
-);
+// Removed unused placeholder: ContentBlock
 
 // Define components with icons for the new sidebar
 const components = [
@@ -133,11 +126,7 @@ function CustomSidebarTriggerInternal() {
 
 // --- Main Page Component ---
 export default function TestingPage() {
-  const [isLoading, setIsLoading] = React.useState(false);
-  const handleV3Click = () => {
-    setIsLoading(true);
-    setTimeout(() => setIsLoading(false), 2000);
-  };
+  // Removed unused state/handlers: isLoading, setIsLoading, handleV3Click
 
   const [activeSection, setActiveSection] = React.useState(components[0].id);
 
@@ -254,7 +243,7 @@ export default function TestingPage() {
     {
       id: 'convo-s-only',
       title: 'Reminder Set',
-      content: <p className="text-sm text-muted-foreground">We'll notify you later.</p>,
+      content: <p className="text-sm text-muted-foreground">We&apos;ll notify you later.</p>, // Escaped apostrophe
       primaryAction: null,
       secondaryAction: <ButtonV2 variant="conversational" fill="ghost" size="default">Dismiss</ButtonV2>,
     },
