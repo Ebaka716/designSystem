@@ -38,15 +38,9 @@
 
 ## Component Relationships
 - `CardV1` uses `DetailRowV1` and `CardActionFooterV1` in examples on the testing page.
+- `PortfolioEventsCardV1` uses `CardV1`, `DetailRowV1`, and `ButtonV2`.
+- `StockOverviewCardV1` uses `ButtonV2` and `shadcn/ui` `Slider`.
 - `CardActionFooterV1` uses `ButtonV2` in examples.
 - `DetailRowV1` uses `ButtonV2` in examples.
-- Testing page (`src/app/testing/page.tsx`) uses `shadcn/ui` `sidebar` for navigation and displays examples of custom components (`ButtonV2`, `CardV1`, `DetailRowV1`, `CardActionFooterV1`, `RowV1`).
-- Testing page uses `shadcn/ui` `Tooltip` for sidebar menu items.
-
-## Critical Implementation Paths
-- Component creation involves:
-    - Creating the component file (e.g., `src/components/ComponentName/vN.tsx` or just `ComponentName.tsx` if consolidated).
-    - Defining props interface.
-    - Implementing component logic and JSX with `cn()` and `cva`.
-    - Creating/Updating corresponding documentation file (e.g., `docs/components/ComponentName/vN.md`).
-    - Adding examples to the testing page (`src/app/testing/page.tsx`).
+- Testing page (`src/app/testing/layout.tsx`) uses `shadcn/ui` `sidebar` for navigation and child `page.tsx` files display examples of custom components.
+- Testing page uses `shadcn/ui` `Tooltip`

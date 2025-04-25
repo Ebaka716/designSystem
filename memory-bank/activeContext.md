@@ -12,8 +12,8 @@
 - **Learnings and project insights**
 
 ## Current Focus
-- Refactor testing page (`src/app/testing/page.tsx`) into sub-pages.
-- **Update:** Clean up remaining testing sub-pages (`card`, `detail-row`, etc.) to align with the new layout structure (removing redundant wrappers/headers).
+- Clean up remaining testing sub-pages (`card`, `detail-row`, etc.) to align with the new layout structure (removing redundant wrappers/headers).
+- **Update:** Verify responsiveness and layout of new components (`PortfolioEventsCardV1`, `StockOverviewCardV1`).
 
 ## Recent Changes
 - Refactored testing page Card Row Layout examples using data mapping.
@@ -60,11 +60,33 @@
   - Removed Outline, Ghost, and Loading conversational button examples from `src/app/testing/button/page.tsx`.
 - Committed testing page refactor changes to `devTree` branch.
 - Pushed `devTree` branch to remote GitHub repository.
+- Cleaned up testing sub-pages (`card`, `detail-row`, `card-action-footer`, `card-row-layouts`, `market-movers`, `markets`, `market-news`) to remove redundant layout elements.
+- Committed testing sub-page cleanup changes.
+- Pushed changes to GitHub.
+- **Created Portfolio Events Card:**
+  - Added `PortfolioEventsCardV1` component (`src/components/PortfolioEventsCard/v1.tsx`).
+  - Added testing page (`src/app/testing/portfolio-events/page.tsx`).
+  - Added sidebar link in `layout.tsx`.
+  - Implemented layout using `CardV1`, `DetailRowV1`, `ButtonV2`, icons, and static data.
+  - Added hover effect to rows.
+  - Removed collapse button from header.
+  - Added example of row style to Detail Row testing page.
+- **Created Stock Overview Card:**
+  - Added `StockOverviewCardV1` component (`src/components/StockOverviewCard/v1.tsx`).
+  - Added testing page (`src/app/testing/stock-overview/page.tsx`).
+  - Added sidebar link in `layout.tsx`.
+  - Implemented layout using `ButtonV2`, `Slider`, icons, helper components (`KeyDataRow`, `RangeSlider`), and static data.
+  - Refactored component to support conditional rendering of sections (After Hours, Actions, Key Data) via props.
+  - Added variations to testing page demonstrating conditional rendering.
+  - Refined responsiveness for After Hours section and Key Data rows.
+  - Added documentation files for `PortfolioEventsCardV1` and `StockOverviewCardV1`.
 
 ## Next Steps
 - Update Memory Bank files (this task - in progress).
-- Clean up remaining testing sub-pages (`card`, `detail-row`, `card-action-footer`, `card-row-layouts`, `market-movers`, `market-news`, `markets`) to remove redundant layout/header elements.
-- Review and potentially update component documentation (`docs/components/*`) to reflect current state (e.g., create docs for Balance Card).
+- Commit new components and documentation.
+- Define/implement props for dynamic data in `PortfolioEventsCardV1` and `StockOverviewCardV1`.
+- Extract shared helper components (e.g., `NotificationBadge`, `KeyDataRow`, `RangeSlider`) to a common location.
+- Address any remaining TODOs in the code.
 
 ## Active Decisions & Considerations
 - `ButtonV2` is now the single source of truth for button components.
@@ -74,6 +96,8 @@
 - `testing/page.tsx` has become too large and needs refactoring into sub-pages for better maintainability.
 - The refactor will involve creating a shared `layout.tsx` and separate `page.tsx` files for each component section.
 - The testing sandbox (`/testing`) will use a shared `layout.tsx` for the main frame and navigation, with individual component examples isolated in sub-route `page.tsx` files.
+- New complex components (`PortfolioEventsCardV1`, `StockOverviewCardV1`) are being built using existing base components (`CardV1`, `DetailRowV1`, `ButtonV2`) and `shadcn/ui` primitives (`Slider`).
+- Component variations (like the Stock Overview sizes) are handled via props and conditional rendering within the same component file, rather than separate files.
 
 ## Patterns & Preferences
 - Following shadcn/ui conventions (`cn` utility, `cva` for variants).
@@ -85,6 +109,7 @@
 - Using flexbox for layout, including sticky footers in cards.
 - Handling component padding internally where possible, but overriding via `className` when context requires specific adjustments (e.g., `CardActionFooterV1` padding in combined examples).
 - Utilizing Next.js App Router `layout.tsx` conventions for shared UI is the standard approach for route segments.
+- Use of internal helper components (`KeyDataRow`, `RangeSlider`, `NotificationBadge`) within complex card components.
 
 ## Learnings & Insights
 - `create-next-app` can be sensitive to parent directory names.
@@ -108,3 +133,5 @@
 - Duplicated UI elements (headers, sidebars) often indicate nested layouts in Next.js, typically involving a `layout.tsx` file applying layout to its child routes/pages.
 - Confirming the existence and content of `layout.tsx` files is crucial when debugging layout issues in the App Router.
 - Refactoring complex pages into layout + sub-page structures improves maintainability and aligns with Next.js conventions.
+- Responsive layouts involving multiple columns or complex rows require careful testing and potentially multiple iterations to handle wrapping and overflow correctly (e.g., Stock Overview card responsiveness).
+- Clear communication and step-by-step instructions are helpful when iterating on complex UI layouts.

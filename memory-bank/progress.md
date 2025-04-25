@@ -53,16 +53,33 @@
   - Button and Balance testing pages (`button/page.tsx`, `balance/page.tsx`) cleaned to remove redundant layout elements.
   - Removed Outline, Ghost, Loading conversational button examples from Button testing page.
 - Git commit pushed to remote `devTree` branch.
+- Testing sub-pages (`card`, `detail-row`, etc.) cleaned up.
+- **Portfolio Events Card (V1):**
+  - Component created (`src/components/PortfolioEventsCard/v1.tsx`).
+  - Testing page added (`/testing/portfolio-events`).
+  - Uses `CardV1`, `DetailRowV1`, static data.
+  - Hover effects added to rows.
+- **Stock Overview Card (V1):**
+  - Component created (`src/components/StockOverviewCard/v1.tsx`).
+  - Testing page added (`/testing/stock-overview`).
+  - Uses `ButtonV2`, `Slider`, internal helpers (`KeyDataRow`, `RangeSlider`), static data.
+  - Supports conditional rendering of sections via props.
+  - Responsiveness improved for After Hours section.
+  - Documentation created for Portfolio Events and Stock Overview cards.
 
 ## What's Left to Build
 - `Layout` component (v1, v2, v3) and documentation.
 - Refactor `testing/page.tsx` into sub-pages.
 - **Update:** Clean up remaining testing sub-pages (`card`, `detail-row`, etc.) to remove redundant layout/header elements.
+- **DONE:** Cleaned up testing sub-pages.
 - Documentation updates for `CardV1`, `CardContentSection`, `CardActionRow` if still relevant.
 - Documentation for `BalanceCard`.
+- Define/implement props for dynamic data in `PortfolioEventsCardV1` and `StockOverviewCardV1`.
+- Extract shared helper components (e.g., `NotificationBadge`, `KeyDataRow`, `RangeSlider`).
 
 ## Current Status
 - Core components (`ButtonV2`, `CardV1`, `DetailRowV1`, `CardActionFooterV1`) exist.
+- New components: `PortfolioEventsCardV1`, `StockOverviewCardV1` (using static data).
 - `ButtonV2` is the consolidated button component.
 - Testing page provides a functional sandbox with examples mostly using data mapping.
 - `DetailRowV1` has been made more flexible with the `primaryContent` prop.
@@ -72,10 +89,13 @@
 - `testing/page.tsx` is functional but large and scheduled for refactoring into sub-pages.
 - **Update:** Testing sandbox (`/testing`) structure refactored to use `layout.tsx` + sub-pages.
 - **Update:** Button and Balance testing pages are cleaned up; other sub-pages still need cleanup.
+- **Update:** All testing sub-pages cleaned up.
 
 ## Known Issues
 - None currently identified.
 - **Update:** Individual testing pages (other than Button, Balance, Market News) likely contain redundant layout elements (headers, sections) that need removal.
+- **Update:** Core component documentation (`CardV1`, etc.) may be outdated.
+- **Update:** Helper components (`NotificationBadge`, `KeyDataRow`, `RangeSlider`) are duplicated, need extraction.
 
 ## Evolution of Project Decisions
 - Initial `create-next-app` failed due to directory name; resolved by using a temporary directory and `rsync`.
@@ -112,3 +132,4 @@
 - Decided to refactor the `testing/page.tsx` into sub-pages due to increasing size and complexity.
 - **Diagnosed nested layout issue** in `/testing` caused by layout definitions in both `layout.tsx` and `page.tsx`.
 - **Adopted standard Next.js App Router pattern:** Define shared UI in `layout.tsx`, render page-specific content in `page.tsx`, use file-based routing for navigation between component example pages.
+- **Adopted conditional rendering via props** (`showKeyData`, etc.) to handle variations of the `StockOverviewCardV1` within a single component file.

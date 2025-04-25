@@ -5,6 +5,15 @@ import { DetailRowV1 } from "@/components/DetailRow/v1";
 import { CardV1 } from '@/components/Card/v1';
 import { ButtonV2 } from '@/components/Button/v2';
 import { cn } from "@/lib/utils"; 
+import { CalendarClock, ChevronRight, Bell } from 'lucide-react';
+
+// --- Helper: Notification Badge --- 
+// Copied from PortfolioEventsCard/v1.tsx - TODO: Extract to shared location
+const NotificationBadge = ({ count }: { count: number }) => (
+  <span className="absolute -top-1 -right-1 flex h-4 w-4 items-center justify-center rounded-full bg-red-600 text-xs font-semibold text-white">
+    {count}
+  </span>
+);
 
 // TODO: Move this shared data to a common location
 const marketNewsData = [
@@ -214,6 +223,55 @@ export default function DetailRowTestingPage() {
           }
         </CardV1>
       </div>
+
+      {/* --- NEW: Icon, Text Lines, and Action Row --- */}
+      <div>
+        <h3 className="text-lg font-medium mb-2">Icon, Text Lines, and Action Row</h3>
+        <CardV1 className="shadow-none" contentProps={{ className: 'p-0' }}>
+          {/* Example 1: With Action & Badge */}
+          <DetailRowV1
+            className={cn(
+              "px-6 py-4 transition-colors hover:bg-muted/50 cursor-pointer" // Add padding, hover effect, and cursor
+            )}
+            primaryContent={
+              <div className="flex items-center gap-3"> { /* Container for icon + text */}
+                <div className="relative"> { /* Wrapper for potential badge */}
+                  <CalendarClock className="size-5 text-muted-foreground" strokeWidth={1.5} />
+                  <NotificationBadge count={3} />
+                </div>
+                <div className="flex flex-col">
+                  <span className="text-sm font-medium">Upcoming Event Title</span>
+                  <span className="text-sm text-muted-foreground">Relevant details or date</span>
+                </div>
+              </div>
+            }
+            actionContent={
+              <ChevronRight className="size-5 text-muted-foreground" />
+            }
+          />
+          {/* Example 2: No Action, No Badge */}
+          <DetailRowV1
+            className={cn(
+              "px-6 py-4 transition-colors hover:bg-muted/50 cursor-pointer", // Add padding, hover effect, and cursor
+              "border-t border-border" // Add border for items after the first
+            )}
+            primaryContent={
+              <div className="flex items-center gap-3"> { /* Container for icon + text */}
+                <div className="relative"> { /* Wrapper for potential badge */}
+                  <Bell className="size-5 text-muted-foreground" strokeWidth={1.5} />
+                  {/* No Badge */}
+                </div>
+                <div className="flex flex-col">
+                  <span className="text-sm font-medium">Notification Setting</span>
+                  <span className="text-sm text-muted-foreground">Manage your preferences</span>
+                </div>
+              </div>
+            }
+            actionContent={null} // No Action
+          />
+        </CardV1>
+      </div>
+
     </>
   );
 } 

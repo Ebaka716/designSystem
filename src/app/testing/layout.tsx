@@ -16,6 +16,8 @@ import {
   TrendingUp,
   Newspaper,
   Scale,
+  CalendarDays,
+  CandlestickChart,
 } from 'lucide-react';
 
 import {
@@ -51,6 +53,8 @@ const components = [
   { id: 'markets-card', path: '/testing/markets', name: 'Markets Card', icon: TrendingUp },
   { id: 'market-news-card', path: '/testing/market-news', name: 'Market News Card', icon: Newspaper },
   { id: 'balance-card', path: '/testing/balance', name: 'Balance Card', icon: Scale },
+  { id: 'portfolio-events-card', path: '/testing/portfolio-events', name: 'Portfolio Events Card', icon: CalendarDays },
+  { id: 'stock-overview-card', path: '/testing/stock-overview', name: 'Stock Overview Card', icon: CandlestickChart },
 ];
 
 // --- Collapsible Shadcn Sidebar Component ---
