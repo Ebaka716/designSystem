@@ -3,7 +3,6 @@
 import React from 'react';
 import { ButtonV2 } from '@/components/Button/v2';
 import { Slider } from "@/components/ui/slider"; // Import Slider
-import { cn } from "@/lib/utils";
 import {
   RefreshCw,
   Moon,
@@ -11,7 +10,6 @@ import {
   Bell,
   Filter,
   Link,
-  Apple // Assuming Apple icon is available or use a placeholder
 } from 'lucide-react';
 
 // Placeholder for Apple Logo if specific icon not available
@@ -25,10 +23,9 @@ interface KeyDataRowProps {
   value1: string;
   label2?: string;
   value2: string;
-  className?: string;
 }
 
-const KeyDataRow: React.FC<KeyDataRowProps> = ({ icon: Icon, label, value1, label2, value2, className }) => (
+const KeyDataRow: React.FC<KeyDataRowProps> = ({ icon: Icon, label, value1, label2, value2 }) => (
   <div className="grid grid-cols-3 gap-4 items-center text-sm py-2 border-b border-border last:border-b-0">
     <div className="flex items-center gap-2 text-muted-foreground">
       {Icon && <Icon className="size-4 flex-shrink-0" />}
@@ -47,10 +44,9 @@ interface RangeSliderProps {
   low: string;
   high: string;
   currentValue: number; // e.g., 50 for midpoint
-  className?: string;
 }
 
-const RangeSlider: React.FC<RangeSliderProps> = ({ label, low, high, currentValue, className }) => (
+const RangeSlider: React.FC<RangeSliderProps> = ({ label, low, high, currentValue }) => (
   <div className="grid grid-cols-3 gap-4 items-center text-sm py-2 border-b border-border last:border-b-0">
     <span className="text-muted-foreground col-span-1">{label}</span>
     <div className="col-span-2 flex items-center gap-2">

@@ -6,9 +6,7 @@ import { DetailRowV1 } from '@/components/DetailRow/v1';
 import { ButtonV2 } from '@/components/Button/v2';
 import {
   Info,
-  ChevronUp,
   CalendarClock, // Using CalendarClock for Earnings Dates
-  Badge,
   ChevronRight,
   DollarSign,
   Building,
