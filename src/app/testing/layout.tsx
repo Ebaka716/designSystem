@@ -18,6 +18,7 @@ import {
   Scale,
   CalendarDays,
   CandlestickChart,
+  Building,
 } from 'lucide-react';
 
 import {
@@ -55,6 +56,7 @@ const components = [
   { id: 'balance-card', path: '/testing/balance', name: 'Balance Card', icon: Scale },
   { id: 'portfolio-events-card', path: '/testing/portfolio-events', name: 'Portfolio Events Card', icon: CalendarDays },
   { id: 'stock-overview-card', path: '/testing/stock-overview', name: 'Stock Overview Card', icon: CandlestickChart },
+  { id: 'company-profile-card', path: '/testing/company-profile', name: 'Company Profile Card', icon: Building },
 ];
 
 // --- Collapsible Shadcn Sidebar Component ---
