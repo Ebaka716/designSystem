@@ -40,6 +40,7 @@ import {
 } from "@/components/ui/tooltip";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
+import { ViewAssembly } from '@/components/ui/viewAssembly';
 
 // Define components with icons for the sidebar (copied from page.tsx)
 // TODO: Consider moving this to a shared constants file later
@@ -131,6 +132,7 @@ export default function TestingLayout({ children }: { children: React.ReactNode 
           </div>
           {/* Render the specific page content here */}
           <div className="p-8 space-y-12 flex-1 overflow-y-auto">
+            <ViewAssembly />
             {children}
           </div>
         </main>

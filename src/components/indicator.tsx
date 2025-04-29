@@ -4,7 +4,7 @@ import { cn } from '@/lib/utils'; // Assuming you have a utility for classnames
 type IndicatorLevel = 'Low' | 'Medium' | 'High';
 
 interface IndicatorProps {
-  label: string;
+  label?: string;
   level: IndicatorLevel;
   className?: string;
 }
