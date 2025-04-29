@@ -18,6 +18,7 @@ import {
   Scale,
   CalendarDays,
   CandlestickChart,
+  Quote,
 } from 'lucide-react';
 
 import {
@@ -40,7 +41,6 @@ import {
 } from "@/components/ui/tooltip";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
-import { ViewAssembly } from '@/components/ui/viewAssembly';
 
 // Define components with icons for the sidebar (copied from page.tsx)
 // TODO: Consider moving this to a shared constants file later
@@ -56,6 +56,8 @@ const components = [
   { id: 'balance-card', path: '/testing/balance', name: 'Balance Card', icon: Scale },
   { id: 'portfolio-events-card', path: '/testing/portfolio-events', name: 'Portfolio Events Card', icon: CalendarDays },
   { id: 'stock-overview-card', path: '/testing/stock-overview', name: 'Stock Overview Card', icon: CandlestickChart },
+  { id: 'view-assembly-section', path: '/testing/viewAssembly', name: 'View Assembly', icon: LayoutGrid },
+  { id: 'detail-quote-section', path: '/testing/detail-quote', name: 'Detail Quote', icon: Quote },
 ];
 
 // --- Collapsible Shadcn Sidebar Component ---
@@ -132,7 +134,6 @@ export default function TestingLayout({ children }: { children: React.ReactNode 
           </div>
           {/* Render the specific page content here */}
           <div className="p-8 space-y-12 flex-1 overflow-y-auto">
-            <ViewAssembly />
             {children}
           </div>
         </main>

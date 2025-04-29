@@ -88,6 +88,27 @@ export default function DetailRowTestingPage() {
     },
   ];
 
+  const singleRowData = [
+    {
+      id: 'sr-1',
+      primaryText: "Account Status",
+      actionContent: <span className="text-sm text-foreground">Active</span>,
+      needsSeparator: false,
+    },
+    {
+      id: 'sr-2',
+      primaryText: "Last Login",
+      actionContent: <span className="text-sm text-foreground">Aug 16, 2024 10:30 AM</span>,
+      needsSeparator: true,
+    },
+    {
+      id: 'sr-3',
+      primaryText: "Email Verified",
+      actionContent: <span className="text-sm text-green-700">Yes</span>,
+      needsSeparator: true,
+    },
+  ];
+
   return (
     <>
       {/* Stacked Account Info (Mapped) */}
@@ -139,6 +160,22 @@ export default function DetailRowTestingPage() {
         </CardV1>
       </div>
 
+      {/* Single Row (Label/Value) */}
+      <div>
+        <h3 className="text-lg font-medium mb-2">Single Row (Label/Value)</h3>
+        <CardV1 className="shadow-none" contentProps={{ className: 'p-0' }}>
+          {singleRowData.map((row) => (
+             <DetailRowV1 
+              key={row.id}
+              primaryText={row.primaryText}
+              // No secondary text
+              actionContent={row.actionContent}
+              className={cn("px-6 py-3", row.needsSeparator && "border-t border-border")} 
+            />
+          ))}
+         </CardV1>
+      </div>
+
       {/* Activity Log Style (Not refactored - uses primaryContent) */}
       <div>
         <h3 className="text-lg font-medium mb-2">Activity Log Style</h3>
@@ -178,7 +215,6 @@ export default function DetailRowTestingPage() {
           />
         </CardV1>
       </div>
-
       {/* News Item Style (Using primaryContent) */}
       <div>
         <h3 className="text-lg font-medium mb-2">News Item Style</h3>
