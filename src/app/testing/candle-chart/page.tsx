@@ -20,7 +20,7 @@ export default function CandleChartPage() {
         cardTitle="MSFT Symbol"
         contentProps={{ className: 'px-4' }}
       >
-        <CandleChartV1 symbol="MSFT" />
+        <CandleChartV1 />
       </CardV1>
     </div>
   );
