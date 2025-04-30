@@ -5,7 +5,6 @@ import {
   createChart, 
   ColorType, 
   CrosshairMode, 
-  LineStyle, 
   CandlestickSeries,
   HistogramSeries,
   IChartApi,
@@ -45,9 +44,20 @@ function generateSampleData(count = 100) {
   return data;
 }
 
+// Define a type for the candle data
+interface CandleData {
+  time: string;
+  open: number;
+  high: number;
+  low: number;
+  close: number;
+  volume: number;
+  color: string;
+}
+
 interface CandleChartProps extends React.HTMLAttributes<HTMLDivElement> {
-  symbol?: string;
-  initialData?: any[];
+  // symbol?: string; // Remove if not used
+  initialData?: CandleData[];
   backgroundColor?: string;
   lineColor?: string;
   textColor?: string;
@@ -57,7 +67,7 @@ interface CandleChartProps extends React.HTMLAttributes<HTMLDivElement> {
 
 export function CandleChartV1({ 
   className,
-  symbol = 'AAPL',
+  // symbol = 'AAPL', // Remove if not used
   initialData,
   backgroundColor = '#ffffff', // Default white background
   lineColor = '#2962FF', // Example line color
